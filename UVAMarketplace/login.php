@@ -5,15 +5,28 @@ require('Account-db.php');
 
 $attemptedLogin = FALSE; //Bool for if a user tried to sign up
 
+if (!isset($_SESSION)) {
+  session_start();
+}
+
+if (isset($_SESSION['computingID'])) {
+  header("Location: home.php");
+  exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   if (!empty($_POST['loginBtn'])) {
     $attemptedLogin = TRUE;
-    $res = isValidLogin($_POST['username'], $_POST['pwd']);
-    if ($res) {
-     session_start();
-     $_SESSION['username'] = $_POST['username'];
-     header("Location: home.php");
-     exit();
+    if (isValidLogin($_POST['username'], $_POST['pwd'])) {
+      $_SESSION['username'] = $_POST['username'];
+      if(isUser($_POST['username'])) {
+        setSessionVars($_SESSION['username']);
+        header("Location: home.php");
+      }
+      else {
+        header("Location: createProfile.php");
+      }
+      exit();
     }
   }
 }

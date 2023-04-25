@@ -3,7 +3,23 @@ require("connect-db.php");
 
 require('Account-db.php');
 
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+if (!$_SESSION['username']) {
+    header("Location: signup.php");
+    exit();
+} 
+elseif(!isUser($_SESSION['username'])) {
+    header("Location: createProfile.php");
+    exit();
+}
+else if (!$_SESSION) {
+    setSessionVars($_SESSION['username']);
+}
+
+$profilePicPath = "profilePics/".$_SESSION['profilePic'];
 
 ?>
 
@@ -18,6 +34,8 @@ session_start();
   <link rel="stylesheet" href="activity-styles.css" /> 
 </head>
 <body>  
-Welcome, <?php echo($_SESSION['username']); ?>
+Welcome, <?php echo($_SESSION['name']); ?> 
+
+<img src="../profilePics/<?=$_SESSION['profilePic']?>" >
 </body>
 </html>

@@ -6,16 +6,24 @@ require('Account-db.php');
 $userAvail = TRUE; //Bool for whether username is available
 $attemptedSignup = FALSE; //Bool for if a user tried to sign up
 
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+if (isset($_SESSION['username'])) {
+    header("Location: home.php");
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   if (!empty($_POST['signupBtn'])) {
     $attemptedSignup = TRUE;
-    $userAvail = isUsernameAvailable($_POST['username']);
+    $userAvail = !hasAccount($_POST['username']);
 
     if ($userAvail) {
        createAccount($_POST['username'], $_POST['pwd']);
-       session_start();
        $_SESSION['username'] = $_POST['username'];
-       header("Location: home.php");
+       header("Location: createProfile.php");
        exit();
     }
   }
