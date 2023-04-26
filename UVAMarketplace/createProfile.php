@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	<title>Profile Registration Page</title>
 	<style>
 		body {
-			background-image: url('tundy.jpeg'); /* Change the image path to your desired background image */
+			background-image: url('tundy.jpeg'); 
 			background-repeat: no-repeat;
 			background-size: cover;
 			display: flex;
@@ -107,8 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 	<form>
 		<h1>Profile Registration</h1>
-		<label for="computing_id">Computing ID:</label>
-		<input type="text" id="computing_id" name="computing_id" required>
+		<label for="computingID">Computing ID:</label>
+		<input type="text" id="computingID" name="computingID" required>
 		<label for="name">Name:</label>
 		<input type="text" id="name" name="name" required>
 		<label for="username">Username:</label>
@@ -120,8 +120,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			<option value="3">3rd Year</option>
 			<option value="4">4th Year</option>
 		</select>
-		<label for="profile_pic">Profile Picture:</label>
-		<input type="file" id="profile_pic" name="profile_pic" accept="image/*" required>
+		<label for="profilePic">Profile Picture:</label>
+		<input type="file" id="profilePic" name="profilePic" accept="image/*" required>
 		<button type="submit">Submit</button>
 	</form>
 </body>
