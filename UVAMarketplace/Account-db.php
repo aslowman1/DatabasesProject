@@ -59,6 +59,4 @@ function createAccount($username, $pwd) {
     $statement->execute();
     $statement->closeCursor();
 }
-
-
 ?>

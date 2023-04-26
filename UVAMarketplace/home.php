@@ -12,7 +12,6 @@ if (!$_SESSION['username']) {
     exit();
 } 
 elseif(!isUser($_SESSION['username'])) {
-    print("hi");
     header("Location: createProfile.php");
     exit();
 }
@@ -26,6 +25,7 @@ $profilePicPath = "profilePics/".$_SESSION['profilePic'];
 
 <!DOCTYPE html>
 <html>
+<?php include 'navbar.php';?>
 <head>
   <meta charset="utf-8">   
   <meta http-equiv="X-UA-Compatible" content="IE=edge">  <!-- required to handle IE -->
