@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	<title>Profile Registration Page</title>
 	<style>
 		body {
-			background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp'); /* Change the image path to your desired background image */
+			background-image: url('tundy.jpeg'); /* Change the image path to your desired background image */
 			background-repeat: no-repeat;
 			background-size: cover;
 			display: flex;
