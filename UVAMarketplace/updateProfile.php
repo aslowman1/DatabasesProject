@@ -3,6 +3,7 @@ require("connect-db.php");
 require('Account-db.php');
 require('User-db.php');
 
+
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -10,18 +11,25 @@ if (!isset($_SESSION)) {
 if (!$_SESSION['username']) {
     header("Location: signup.php");
     exit();
-} 
-
+}
+elseif(!isUser($_SESSION['username'])) {
+    header("Location: createProfile.php");
+    exit();
+}
+elseif (!$_SESSION) {
+    setSessionVars($_SESSION['username']);
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($_POST['createProfileBtn'])) {
+    if (!empty($_POST['updateProfileBtn'])) {
         $computingID = $_POST['computingID'];
         $name = $_POST['name'];
         $year = $_POST['year'];
         $profilePic = $_FILES['profilePic'];
         $username = $_SESSION['username'];
-        createProfile($computingID, $name, $year, $profilePic, $username);
+        updateProfile($computingID, $name, $year, $profilePic);
         setSessionVars($username);
+
         header("Location: home.php");
         exit();
     }
@@ -41,22 +49,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>  
   <div>  
-    <h1>Create Profile</h1>
-    <form action="createProfile.php" method="post" enctype="multipart/form-data">     
-      Computing ID: <input type="text" name="computingID" minlength="6" maxlength="7" required /> <br/>
-      Name: <input type="text" name="name" required /> <br/>
+    <h1>Update Profile</h1>
+    <form action="updateProfile.php" method="post" enctype="multipart/form-data">     
+      <input type="hidden" name="computingID" value="<?=$_SESSION['computingID']?>" minlength="6" maxlength="7" required />
+      Name: <input type="text" name="name" value ="<?=$_SESSION['name']?>" required /> <br/>
 
-      <input type="radio" name="year" value="1" checked>
+      <input type="radio" name="year" value="1" <?php echo ($_SESSION['year']=="1") ? 'checked="checked"':'';?>>
       <label for="1">1</label><br>
-      <input type="radio" name="year" value="2">
+      <input type="radio" name="year" value="2" <?php echo ($_SESSION['year']=="2") ? 'checked="checked"':'';?>>
       <label for="2">2</label><br>
-      <input type="radio" name="year" value="3">
+      <input type="radio" name="year" value="3" <?php echo ($_SESSION['year']=="3") ? 'checked="checked"':'';?>>
       <label for="3">3</label><br>
-      <input type="radio" name="year" value="4">
+      <input type="radio" name="year" value="4" <?php echo ($_SESSION['year']=="4") ? 'checked="checked"':'';?>>
       <label for="4">4</label><br>
 
       <input type="file" name="profilePic" accept="image/png, image/jpeg, image/jpg"> <br>
-      <input type="submit" name ="createProfileBtn" value="Submit" class="btn" /> <br/>
+      <input type="submit" name ="updateProfileBtn" value="Submit" class="btn" /> <br/>
     </form>
   </div>
 

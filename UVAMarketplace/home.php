@@ -1,7 +1,7 @@
 <?php
 require("connect-db.php");
-
 require('Account-db.php');
+require('User-db.php');
 
 if (!isset($_SESSION)) {
     session_start();
@@ -12,10 +12,11 @@ if (!$_SESSION['username']) {
     exit();
 } 
 elseif(!isUser($_SESSION['username'])) {
+    print("hi");
     header("Location: createProfile.php");
     exit();
 }
-else if (!$_SESSION) {
+elseif (!$_SESSION) {
     setSessionVars($_SESSION['username']);
 }
 

@@ -1,7 +1,7 @@
 <?php
 require("connect-db.php");
-
 require('Account-db.php');
+require('User-db.php');
 
 $attemptedLogin = FALSE; //Bool for if a user tried to sign up
 
