@@ -42,12 +42,77 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <?php include 'navbar.php';?>
 <head>
-  <meta charset="utf-8">   
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">  <!-- required to handle IE -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">  
-  <title>Create Profile</title> 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
-  <link rel="stylesheet" href="activity-styles.css" /> 
+	<title>Update Profile Page</title>
+	<style>
+		body {
+			background-image: url('tundy.jpeg'); /* Change the image path to your desired background image */
+			background-repeat: no-repeat;
+			background-size: cover;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+		}
+
+		form {
+			background-color: #fff;
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+		}
+
+		h1 {
+			margin: 0 0 30px;
+			font-size: 32px;
+			font-weight: bold;
+		}
+
+		input,
+		select {
+			padding: 10px;
+			margin-bottom: 20px;
+			width: 100%;
+			box-sizing: border-box;
+			border: none;
+			border-radius: 5px;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+		}
+
+		textarea {
+			padding: 10px;
+			margin-bottom: 20px;
+			width: 100%;
+			box-sizing: border-box;
+			border: none;
+			border-radius: 5px;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+			resize: none;
+			height: 100px;
+		}
+
+		button {
+			padding: 10px 20px;
+			background-color: #333;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+			cursor: pointer;
+			font-size: 16px;
+		}
+
+		button:hover {
+			background-color: #444;
+		}
+	</style>
 </head>
 <body>  
   <div>  
