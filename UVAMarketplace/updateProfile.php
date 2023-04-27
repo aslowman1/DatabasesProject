@@ -27,7 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $year = $_POST['year'];
         $profilePic = $_FILES['profilePic'];
         $username = $_SESSION['username'];
-        updateProfile($computingID, $name, $year, $profilePic);
+
+        updateProfile($computingID, $name, $year, $profilePic, $username);
         setSessionVars($username);
 
         header("Location: home.php");
@@ -39,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html>
+<?php include 'navbar.php';?>
 <head>
   <meta charset="utf-8">   
   <meta http-equiv="X-UA-Compatible" content="IE=edge">  <!-- required to handle IE -->
@@ -58,8 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <label for="1">1</label><br>
       <input type="radio" name="year" value="2" <?php echo ($_SESSION['year']=="2") ? 'checked="checked"':'';?>>
       <label for="2">2</label><br>
-      <input type="radio" name="year" value="3" <?php echo ($_SESSION['year']=="3") ? 'checked="checked"':'';?>>
-      <label for="3">3</label><br>
+      <input type="radio" name="year" value="3" <?php echo ($_SESSION['year']=="3") ? 'checked="checked"':'';?>>
+      <label for="3">3</label><br>
       <input type="radio" name="year" value="4" <?php echo ($_SESSION['year']=="4") ? 'checked="checked"':'';?>>
       <label for="4">4</label><br>
 

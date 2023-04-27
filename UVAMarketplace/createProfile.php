@@ -50,8 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <label for="1">1</label><br>
       <input type="radio" name="year" value="2">
       <label for="2">2</label><br>
-      <input type="radio" name="year" value="3">
-      <label for="3">3</label><br>
+      <input type="radio" name="year" value="3">
+      <label for="3">3</label><br>
       <input type="radio" name="year" value="4">
       <label for="4">4</label><br>
 
