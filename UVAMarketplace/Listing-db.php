@@ -4,11 +4,16 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+require('Clothes-db.php');
+require('Furniture-db.php');
+require('Books-db.php');
+
+
 if (!isset($_SESSION)) {
     session_start();
 }
 
-function getListing($listingID) {
+function getListingByID($listingID) {
     global $db;
 
     $query = "select * from Listing where listingID=:listingID";
@@ -18,6 +23,60 @@ function getListing($listingID) {
     $results = $statement -> fetch();
     $statement->closeCursor();
     return $results;
+}
+
+function getListingsByUser($computingID) {
+    global $db;
+
+    $query = "select * from Listing where sellerID=:computingID order by post_date DESC";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $results = $statement -> fetchALL();
+    $statement->closeCursor();
+    return $results;
+}
+
+function getAllListings() {
+    global $db;
+
+    $query = "select * from Listing where 
+              listingID in (select Clothes.listingID from Clothes where Listing.listingID = Clothes.listingID) or
+              listingID in (select Furniture.listingID from Furniture where Listing.listingID = Furniture.listingID) or
+              listingID in (select Books.listingID from Books where Listing.listingID = Books.listingID)";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $results = $statement -> fetchALL();
+    $statement->closeCursor();
+    return $results;
+}
+
+function deleteListing($listingID) {
+    global $db;
+
+    $listing = getListingByID($listingID);
+    $category = $listing['categoryID'];
+
+    //Clothes
+    if ($category == 2) {
+        deleteClothes($listingID);
+    }
+    //Furniture
+    elseif ($category == 1) {
+        deleteFurniture($listingID);
+    }
+    //Textbook
+    else {
+        deleteBook($listingID);
+    }
+
+    $query = "delete from Listing where listingID=:listingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':listingID', $listingID);
+    $statement->execute();
+    $statement->closeCursor();
+
+
 }
 
 function createListing($title, $location, $description, $category, $size, $material, $dimensions, $bookTitle, $course, $IBSN, $condition, $listed_price, $itemPic) {
@@ -48,7 +107,6 @@ function createListing($title, $location, $description, $category, $size, $mater
         $imgName = "defaultItem.jpeg";
     }
 
-    print($imgName);
     //Add listing
     $query = "insert into Listing values (:listingID, :title, :post_date, :location, :description, :itemPic, :condition, :listed_price, :sellerID, :categoryID)";
     $statement = $db->prepare($query);
@@ -67,66 +125,18 @@ function createListing($title, $location, $description, $category, $size, $mater
 
     //Clothes
     if ($category == 2) {
-        //Get last row of clothes table
-        $query = "select clothesID from Clothes where clothesID=(select max(clothesID) from Clothes);";
-        $statement = $db->prepare($query);
-        $statement->execute();
-        $results = $statement -> fetch();
-        $statement->closeCursor();
-        $clothesID = (int)$results['clothesID'] + 1;
-
         //Add clothes entry
-        $query = "insert into Clothes values (:clothesID, :categoryID, :size, :listingID)";
-        $statement = $db->prepare($query);
-        $statement->bindValue(':size', $size);
-        $statement->bindValue(':clothesID', $clothesID);
-        $statement->bindValue(':categoryID', $category);
-        $statement->bindValue(':listingID', $listingID);
-        $statement->execute();
-        $statement->closeCursor();
+        addClothes($category, $size, $listingID);
     }
     //Furniture
     elseif ($category == 1) {
-        //Get last row of furniture table
-        $query = "select furnitureID from Furniture where furnitureID=(select max(furnitureID) from Furniture);";
-        $statement = $db->prepare($query);
-        $statement->execute();
-        $results = $statement -> fetch();
-        $statement->closeCursor();
-        $furnitureID = (int)$results['furnitureID'] + 1;
-
         //Add furniture entry
-        $query = "insert into Furniture values (:furnitureID, :categoryID, :material, :dimensions, :listingID)";
-        $statement = $db->prepare($query);
-        $statement->bindValue(':furnitureID', $furnitureID);
-        $statement->bindValue(':categoryID', $category);
-        $statement->bindValue(':material', $material);
-        $statement->bindValue(':dimensions', $dimensions);
-        $statement->bindValue(':listingID', $listingID);
-        $statement->execute();
-        $statement->closeCursor();
+        addFurniture($category, $material, $dimensions, $listingID);
     }
     //Textbook
     else {
-        //Get last row of books table
-        $query = "select bookID from Books where bookID=(select max(bookID) from Books);";
-        $statement = $db->prepare($query);
-        $statement->execute();
-        $results = $statement -> fetch();
-        $statement->closeCursor();
-        $bookID = (int)$results['bookID'] + 1;
-
         //Add book entry
-        $query = "insert into Books values (:bookID, :categoryID, :bookTitle, :course, :IBSN, :listingID)";
-        $statement = $db->prepare($query);
-        $statement->bindValue(':bookID', $bookID);
-        $statement->bindValue(':categoryID', $category);
-        $statement->bindValue(':bookTitle', $bookTitle);
-        $statement->bindValue(':course', $course);
-        $statement->bindValue(':IBSN', $IBSN);
-        $statement->bindValue(':listingID', $listingID);
-        $statement->execute();
-        $statement->closeCursor();
+        addBook($category, $bookTitle, $course, $IBSN, $listingID);
     }
 }
 

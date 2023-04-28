@@ -24,7 +24,7 @@ elseif (!$_SESSION['listingID']) {
     exit();
 }
 
-$listing = getListing($_SESSION['listingID']);
+$listing = getListingByID($_SESSION['listingID']);
 ?>
 
 <!DOCTYPE html>
@@ -40,10 +40,10 @@ $listing = getListing($_SESSION['listingID']);
 </head>
 <h1> <?php echo $listing['title']?></h1>
 <body>  
-<img src="../itemPics/<?=$listing['itemPic']?>" > <br>
+<img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto;" src="../itemPics/<?=$listing['itemPic']?>" > <br>
 Description: <?php echo $listing['description']?> <br>
 Date posted: <?php echo $listing['post_date']?> <br>
-Locaiton: <?php echo $listing['description']?> <br>
+Location: <?php echo $listing['location']?> <br>
 Condition: <?php echo $listing['condition']?> <br>
 Price: $<?php echo $listing['listed_price']?> <br>
 </body>

@@ -17,7 +17,7 @@
                 <img src="../profilePics/<?=$_SESSION['profilePic']?>" 
                 width="40" height="40" class="rounded-circle"> </a>
             <div class="dropdown-menu dropdown-menu-sw" style="right:0" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="viewProfile.php">View Profile</a>
+            <a class="dropdown-item" href="viewProfile.php?profile=user">My Profile</a>
             <a class="dropdown-item" href="updateProfile.php">Edit Profile</a>
             <a class="dropdown-item" href="logout.php">Logout</a>
             </div>

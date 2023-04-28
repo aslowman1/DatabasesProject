@@ -2,6 +2,7 @@
 require("connect-db.php");
 require('Account-db.php');
 require('User-db.php');
+require('Listing-db.php');
 
 if (!isset($_SESSION)) {
     session_start();
@@ -18,8 +19,36 @@ elseif(!isUser($_SESSION['username'])) {
 elseif (!$_SESSION) {
     setSessionVars($_SESSION['username']);
 }
+elseif(isset($_GET['profile'])){
+    $_SESSION['profile'] = $_SESSION['computingID'];
+ }
+elseif (!isset($_SESSION['profile'])) {
+    $_SESSION['profile'] = $_SESSION['computingID'];
+}
 
-$profilePicPath = "profilePics/".$_SESSION['profilePic'];
+//Current profile
+$user = getUser($_SESSION['profile']);
+
+$isMyProfile = $user['computingID'] == $_SESSION['computingID'];
+$listings = getListingsByUser($user['computingID']);
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!empty($_POST['viewListingBtn'])) {
+        $_SESSION['listingID'] = $_POST['listingToView'];
+        header("Location: viewListing.php");
+        exit();
+    }
+    elseif (!empty($_POST['editListingBtn'])) {
+        $_SESSION['listingID'] = $_POST['listingToView'];
+        header("Location: viewListing.php");
+        exit();
+    }
+    elseif (!empty($_POST['deleteListingBtn'])) {
+        $_SESSION['listingID'] = NULL;
+        deleteListing($_POST['listingToDelete']);
+        $listings = getListingsByUser($user['computingID']);
+    }
+}
 
 ?>
 
@@ -35,12 +64,70 @@ $profilePicPath = "profilePics/".$_SESSION['profilePic'];
   <link rel="stylesheet" href="activity-styles.css" /> 
 </head>
 <body>  
-<img src="../profilePics/<?=$_SESSION['profilePic']?>" > <br>
-Computing ID: <?php echo($_SESSION['computingID']); ?> <br>
-Name: <?php echo($_SESSION['name']); ?> <br>
-Year: <?php echo($_SESSION['name']); ?> <br>
+<img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto;" src="../profilePics/<?=$user['profilePic']?>" > <br>
+Computing ID: <?php echo $user['computingID']; ?> <br>
+Name: <?php echo $user['name']; ?> <br>
+Year: <?php echo $user['year']; ?> <br> <br>
 
 Listings:
+<div class="row justify-content-center">  
+    <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+      <thead>
+      <tr style="background-color:#B0B0B0">
+        <th> Image </th>    
+        <th >Title </th>
+        <th> Price </th>   
+        <th> Post Date </th>
+        <th> View </th>
+        <?php if($isMyProfile) : ?>
+            <th> Edit </th>
+            <th> Delete </th>
+        <?php endif; ?>
+        <?php if(!$isMyProfile) : ?>
+            <th> Make Offer </th>
+        <?php endif; ?>
+      </tr>
+      </thead>
+    <?php foreach ($listings as $listing): ?>
+      <tr>
+        <td><img src="../itemPics/<?=$listing['itemPic']?>" width=40 height=40></td>
+        <td><?php echo $listing['title']; ?></td>  
+        <td>$<?php echo $listing['listed_price']; ?></td>  
+        <td><?php echo $listing['post_date']; ?></td> 
+        <td> 
+          <form action="viewProfile.php" method="post" >
+            <input type="submit" name="viewListingBtn" value="View" class="btn btn-dark"/>
+            <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
+          </form>  
+        </td>  
+        <?php if($isMyProfile) : ?>
+        <td> 
+          <form action="viewProfile.php" method="post" >
+            <input type="submit" name="editListingBtn" value="Edit" class="btn btn-dark"/>
+            <input type="hidden" name="listingToEdit" value="<?php echo $listing['listingID'];?>" />     
+          </form>  
+        </td>     
+        <td> 
+          <form action="viewProfile.php" method="post" >
+            <input type="submit" name="deleteListingBtn" value="Delete" class="btn btn-danger"/>
+            <input type="hidden" name="listingToDelete" value="<?php echo $listing['listingID'];?>" />     
+          </form>  
+        </td>
+        <?php endif; ?>
+        <?php if(!$isMyProfile) : ?>  
+        <td> 
+          <form action="viewProfile.php" method="post" >
+            <input type="submit" name="makeOfferBtn" value="Offer" class="btn btn-dark"/>
+            <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />     
+          </form>  
+        </td>
+        <?php endif; ?>
+      </tr>
+    <?php endforeach; ?>
+</table>
+</div>
+
+
 
 </body>
 </html>

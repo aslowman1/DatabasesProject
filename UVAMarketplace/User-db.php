@@ -36,6 +36,19 @@ function isUser($username) {
     return !empty($results);
 }
 
+function getUser($computingID) {
+    global $db;
+
+    $query = "select * from User where computingID=:computingID";
+    $statement = $db -> prepare($query);
+    $statement -> bindValue(':computingID', $computingID);
+    $statement -> execute();
+    $results = $statement -> fetch();
+    $statement -> closeCursor();
+
+    return $results;
+}
+
 function createProfile($computingID, $name, $year, $profilePic, $username) {
     global $db;
     $year = (int)$year;

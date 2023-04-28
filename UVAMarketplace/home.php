@@ -21,6 +21,21 @@ elseif (!$_SESSION) {
     setSessionVars($_SESSION['username']);
 }
 
+$listings = getAllListings();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!empty($_POST['viewListingBtn'])) {
+        $_SESSION['listingID'] = $_POST['listingToView'];
+        header("Location: viewListing.php");
+        exit();
+    }
+    elseif (!empty($_POST['viewSellerBtn'])) {
+        $_SESSION['profile'] = $_POST['sellerID'];
+        header("Location: viewProfile.php");
+        exit();
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -35,8 +50,35 @@ elseif (!$_SESSION) {
   <link rel="stylesheet" href="activity-styles.css" /> 
 </head>
 <body>  
-Welcome, <?php echo($_SESSION['name']); ?> 
 
-<img src="../profilePics/<?=$_SESSION['profilePic']?>" >
+<div class="row row-cols-3 g-3">
+<?php foreach ($listings as $listing): ?>
+  <div class="col">
+    <div class="card h-100" >
+    <img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto;" src="../itemPics/<?=$listing['itemPic']?>" class="card-img-top"/>
+      <div class="card-body">
+        <h5 class="card-title"><?php echo $listing['title']; ?></h5>
+        <p class="card-text">
+            Seller: <?php echo getUser($listing['sellerID'])['name']; ?> <br>
+            Price: $<?php echo $listing['listed_price']; ?> <br>
+            Description: <?php echo $listing['description']; ?> <br>
+            Location: <?php echo $listing['location']; ?>
+            Post date: <?php echo $listing['post_date']; ?>
+        </p>
+        <form action="home.php" method="post" >
+            <input type="submit" name="viewListingBtn" value="View Listing" class="btn btn-dark"/>
+            <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
+        </form> 
+        <form action="home.php" method="post" >
+            <input type="submit" name="viewSellerBtn" value="View Seller" class="btn btn-dark"/>
+            <input type="hidden" name="sellerID" value="<?php echo $listing['sellerID'];?>" />     
+        </form>  
+      </div>
+    </div>
+  </div>
+  <?php endforeach; ?>
+</div>
+
+
 </body>
 </html>
