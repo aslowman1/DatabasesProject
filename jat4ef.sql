@@ -568,3 +568,74 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+CREATE TABLE `Listing_audit` (
+  `audit_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `listingID` int(11) NOT NULL,
+  `title` text NOT NULL,
+  `post_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `location` varchar(256) NOT NULL,
+  `description` text DEFAULT NULL,
+  `itemPic` text NOT NULL,
+  `condition` varchar(10) NOT NULL,
+  `listed_price` float NOT NULL,
+  `sellerID` varchar(7) NOT NULL,
+  `categoryID` int(11) NOT NULL,
+  `audit_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`audit_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+DELIMITER $$
+CREATE TRIGGER `Listing_audit_trigger` 
+AFTER UPDATE ON `Listing`
+FOR EACH ROW 
+BEGIN
+  INSERT INTO `Listing_audit` (
+    `listingID`,
+    `title`,
+    `post_date`,
+    `location`,
+    `description`,
+    `itemPic`,
+    `condition`,
+    `listed_price`,
+    `sellerID`,
+    `categoryID`
+  ) 
+  VALUES (
+    OLD.`listingID`,
+    OLD.`title`,
+    OLD.`post_date`,
+    OLD.`location`,
+    OLD.`description`,
+    OLD.`itemPic`,
+    OLD.`condition`,
+    OLD.`listed_price`,
+    OLD.`sellerID`,
+    OLD.`categoryID`
+  );
+END$$
+DELIMITER ;
+
+
+CREATE TABLE `User_audit` (
+  `audit_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `computingID` varchar(7) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `year` int(11) NOT NULL,
+  `profilePic` text NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`audit_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+DELIMITER $$
+CREATE TRIGGER `User_audit_trigger` 
+AFTER UPDATE ON `User` 
+FOR EACH ROW
+BEGIN
+  INSERT INTO `User_audit` (computingID, name, year, profilePic, username, updated_at)
+  VALUES (OLD.computingID, OLD.name, OLD.year, OLD.profilePic, OLD.username, NOW());
+END$$
+DELIMITER ;
