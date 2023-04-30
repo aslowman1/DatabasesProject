@@ -37,19 +37,33 @@ function getListingsByUser($computingID) {
     return $results;
 }
 
-function getAllListings() {
+function getAllListings($orderBy) {
     global $db;
 
-    $query = "select * from Listing where 
-              listingID in (select Clothes.listingID from Clothes where Listing.listingID = Clothes.listingID) or
-              listingID in (select Furniture.listingID from Furniture where Listing.listingID = Furniture.listingID) or
-              listingID in (select Books.listingID from Books where Listing.listingID = Books.listingID)";
+    //Clothes
+    if ($orderBy == "2") {
+        $query = "SELECT * FROM Listing WHERE listingID in (select Clothes.listingID from Clothes where Listing.listingID = Clothes.listingID)";
+    }
+    //Furniture
+    elseif ($orderBy == "1") {
+        $query = "SELECT * FROM Listing WHERE listingID in (select Furniture.listingID from Furniture where Listing.listingID = Furniture.listingID)";
+    }
+    //Textbook
+    elseif ($orderBy == "3") {
+        $query = "SELECT * FROM Listing WHERE listingID in (select Books.listingID from Books where Listing.listingID = Books.listingID)";
+    }
+    else{
+        $query = "SELECT * FROM Listing WHERE 
+            listingID in (select Clothes.listingID from Clothes where Listing.listingID = Clothes.listingID) or
+            listingID in (select Furniture.listingID from Furniture where Listing.listingID = Furniture.listingID) or
+            listingID in (select Books.listingID from Books where Listing.listingID = Books.listingID) ORDER BY $orderBy";
+    }
     $statement = $db->prepare($query);
     $statement->execute();
-    $results = $statement -> fetchALL();
+    $listings = $statement->fetchAll();
     $statement->closeCursor();
-    return $results;
-}
+    return $listings;
+  }
 
 function deleteListing($listingID) {
     global $db;
