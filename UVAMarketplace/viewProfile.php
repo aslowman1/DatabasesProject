@@ -83,34 +83,104 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       margin-left: 20px;
       max-width: 500px;
     }
-    .listing-container {
+    .listing-container, .favorites-container {
       background-color: white;
       border-radius: 5px;
       padding: 30px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       max-width: 700px;
-    }
-    .offers-container{
-      background-color: white;
-      padding: 15px;
-      border-radius: 5px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       margin-left: 20px;
-      max-width: 700px;
+      margin-right: 20px;
+      float: left;
+    }
+    .favorites-container {
+      margin-left: 0;
+      margin-right: 20px;
+      float: right;
     }
   </style>
 </head>
 <body>  
-<img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto;" src="../profilePics/<?=$user['profilePic']?>" > <br>
-Computing ID: <?php echo $user['computingID']; ?> <br>
-Name: <?php echo $user['name']; ?> <br>
-Year: <?php echo $user['year']; ?> <br> <br>
+<div class="container my-5">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-4">
+      <img style="max-width: 100%; height:auto; max-height: 200px; margin-top: 20px;" src="../profilePics/<?=$user['profilePic']?>" >
+    </div>
+    <div class="col-8">
+      <h2><?php echo $user['name']; ?></h2>
+      <p>Computing ID: <?php echo $user['computingID']; ?></p>
+      <p>Year: <?php echo $user['year']; ?></p>
+    </div>
+  </div>
+</div>
 
-Favorites:
-<div class="row justify-content-center">  
-    <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+
+
+<div class="col listing-container">
+  <h2>Listings</h2>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Post Date</th>
+        <th>View</th>
+        <?php if($isMyProfile) : ?>
+          <th>Edit</th>
+          <th>Delete</th>
+        <?php endif; ?>
+        <?php if(!$isMyProfile) : ?>
+          <th>Make Offer</th>
+        <?php endif; ?>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($listings as $listing): ?>
+        <tr>
+          <td><img src="../itemPics/<?=$listing['itemPic']?>" width=40 height=40></td>
+          <td><?php echo $listing['title']; ?></td>
+          <td>$<?php echo $listing['listed_price']; ?></td>
+          <td><?php echo $listing['post_date']; ?></td>
+          <td>
+            <form action="viewProfile.php" method="post">
+              <input type="submit" name="viewListingBtn" value="View" class="btn btn-dark"/>
+              <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />
+            </form>
+          </td>
+          <?php if($isMyProfile) : ?>
+            <td>
+              <form action="viewProfile.php" method="post">
+                <input type="submit" name="editListingBtn" value="Edit" class="btn btn-dark"/>
+                <input type="hidden" name="listingToEdit" value="<?php echo $listing['listingID'];?>" />
+              </form>
+            </td>
+            <td>
+              <form action="viewProfile.php" method="post">
+                <input type="submit" name="deleteListingBtn" value="Delete" class="btn btn-danger"/>
+                <input type="hidden" name="listingToDelete" value="<?php echo $listing['listingID'];?>" />
+              </form>
+            </td>
+          <?php endif; ?>
+          <?php if(!$isMyProfile) : ?>
+            <td>
+              <form action="viewProfile.php" method="post">
+                <input type="submit" name="makeOfferBtn" value="Offer" class="btn btn-dark"/>
+                <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />
+              </form>
+            </td>
+          <?php endif; ?>
+        </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
+</div>
+
+<div class="col-4 favorites-container">  
+  <h2> Favorites:</h2>
+  <table class="table table-bordered table-striped">
       <thead>
-      <tr style="background-color:#B0B0B0">
+      <tr style="background-color:white">
         <th> Image </th>    
         <th >Title </th>
         <th> Price </th>   
@@ -141,123 +211,7 @@ Favorites:
     <?php endforeach; ?>
 </table>
 </div>
-
-Listings:
-<div class="row justify-content-center">  
-    <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
-      <thead>
-        <tr>
-          <th>Image</th>
-          <th>Title</th>
-          <th>Price</th>
-          <th>Post Date</th>
-          <th>View</th>
-          <?php if($isMyProfile) : ?>
-            <th>Edit</th>
-            <th>Delete</th>
-          <?php endif; ?>
-          <?php if(!$isMyProfile) : ?>
-            <th>Make Offer</th>
-          <?php endif; ?>
-        </tr>
-      </thead>
-    <?php foreach ($listings as $listing): ?>
-      <tr>
-        <td><img src="../itemPics/<?=$listing['itemPic']?>" width=40 height=40></td>
-        <td><?php echo $listing['title']; ?></td>  
-        <td>$<?php echo $listing['listed_price']; ?></td>  
-        <td><?php echo $listing['post_date']; ?></td> 
-        <td> 
-          <form action="viewProfile.php" method="post" >
-            <input type="submit" name="viewListingBtn" value="View" class="btn btn-dark"/>
-            <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
-          </form>  
-        </td>  
-        <?php if($isMyProfile) : ?>
-        <td> 
-          <form action="viewProfile.php" method="post" >
-            <input type="submit" name="editListingBtn" value="Edit" class="btn btn-dark"/>
-            <input type="hidden" name="listingToEdit" value="<?php echo $listing['listingID'];?>" />     
-          </form>  
-        </td>     
-        <td> 
-          <form action="viewProfile.php" method="post" >
-            <input type="submit" name="deleteListingBtn" value="Delete" class="btn btn-danger"/>
-            <input type="hidden" name="listingToDelete" value="<?php echo $listing['listingID'];?>" />     
-          </form>  
-        </td>
-        <?php else : ?>  
-        <td> 
-          <form action="viewProfile.php" method="post" >
-            <input type="submit" name="makeOfferBtn" value="Offer" class="btn btn-dark"/>
-            <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />     
-          </form>  
-        </td>
-        <?php endif; ?>
-      </tr>
-    <?php endforeach; ?>
-</table>
-</div>
-
-  <div class="offers-container">
-    <h2>Offers</h2>
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>Image</th>
-          <th>Title</th>
-          <th>Offer Price</th>
-          <th>Offer Status</th>
-          <th>View</th>
-          <?php if($isMyProfile) : ?>
-            <th>Edit</th>
-            <th>Delete</th>
-          <?php endif; ?>
-          <?php if(!$isMyProfile) : ?>
-            <th>Make Offer</th>
-          <?php endif; ?>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($listings as $listing): ?>
-          <tr>
-            <td><img src="../itemPics/<?=$listing['itemPic']?>" width=40 height=40></td>
-            <td><?php echo $listing['title']; ?></td>
-            <td>$<?php echo $listing['listed_price']; ?></td>
-            <td><?php echo $listing['post_date']; ?></td>
-            <td>
-              <form action="viewProfile.php" method="post">
-                <input type="submit" name="viewListingBtn" value="View" class="btn btn-dark"/>
-                <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />
-              </form>
-            </td>
-            <?php if($isMyProfile) : ?>
-              <td>
-                <form action="viewProfile.php" method="post">
-                  <input type="submit" name="editListingBtn" value="Edit" class="btn btn-dark"/>
-                  <input type="hidden" name="listingToEdit" value="<?php echo $listing['listingID'];?>" />
-                </form>
-              </td>
-              <td>
-                <form action="viewProfile.php" method="post">
-                  <input type="submit" name="deleteListingBtn" value="Delete" class="btn btn-danger"/>
-                  <input type="hidden" name="listingToDelete" value="<?php echo $listing['listingID'];?>" />
-                </form>
-              </td>
-            <?php endif; ?>
-            <?php if(!$isMyProfile) : ?>
-              <td>
-                <form action="viewProfile.php" method="post">
-                  <input type="submit" name="makeOfferBtn" value="Offer" class="btn btn-dark"/>
-                  <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />
-                </form>
-              </td>
-            <?php endif; ?>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  </div>
+ 
 </div>
 
 
