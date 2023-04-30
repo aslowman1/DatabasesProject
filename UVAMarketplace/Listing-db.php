@@ -167,4 +167,54 @@ function createListing($title, $location, $description, $category, $size, $mater
 }
 
 
+function updateListing($listingID, $title, $location, $description, $category, $size, $material, $dimensions, $bookTitle, $course, $IBSN, $condition, $listed_price, $itemPic) {
+    global $db;
+
+    $category = (int)$category;
+    $listed_price = (float)$listed_price; 
+    $_SESSION['listingID'] = $listingID; //Used for view listing
+    $listing = getListingByID($listingID);
+
+    if ($itemPic['name']) {
+        //Add profile pic under profilePics/username.jpg/png/jpeg
+        $imgExt = pathinfo($itemPic['name'], PATHINFO_EXTENSION);
+        $imgName = $listingID.'.'.$imgExt;
+        $tmpName = $itemPic['tmp_name'];
+        $uploadPath = '../itemPics/'.$imgName;
+        move_uploaded_file($tmpName, $uploadPath);
+    }
+    else {
+        $imgName = $listing['itemPic'];
+    }
+
+
+    //update listing
+    //$query = "update Listing set title=:title, location=:location, description=:description, itemPic=:itemPic, condition=:condition, listed_price=:listed_price where listingID=:listingID";
+    $query = "update Listing set title=:title, location=:location, description=:description, `condition`=:condition, itemPic=:itemPic, listed_price=:listed_price  where listingID=:listingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':listingID', $listingID);
+    $statement->bindValue(':title', $title);
+    $statement->bindValue(':location', $location);
+    $statement->bindValue(':description', $description);
+    $statement->bindValue(':itemPic', $imgName);
+    $statement->bindValue(':condition', $condition);
+    $statement->bindValue(':listed_price', $listed_price);
+    $statement->execute();
+    $statement->closeCursor();
+
+    //Furniture
+    if ($category == 1) {
+        updateFurniture($material, $dimensions, $listingID);
+    }
+    //Clothes
+    if ($category == 2) {
+        updateClothes($size, $listingID);
+    }
+    //Textbook
+    else {
+        updateBook($bookTitle, $course, $IBSN, $listingID);
+    }
+}
+
+
 ?>

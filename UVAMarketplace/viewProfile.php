@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     elseif (!empty($_POST['editListingBtn'])) {
-        $_SESSION['listingID'] = $_POST['listingToView'];
-        header("Location: viewListing.php");
+        $_SESSION['listingID'] = $_POST['listingToEdit'];
+        header("Location: updateListing.php");
         exit();
     }
     elseif (!empty($_POST['deleteListingBtn'])) {
@@ -168,5 +168,8 @@ Listings:
     <?php endforeach; ?>
 </table>
 </div>
+
+
+
 </body>
 </html>
