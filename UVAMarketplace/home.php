@@ -21,19 +21,23 @@ elseif (!$_SESSION) {
     setSessionVars($_SESSION['username']);
 }
 
-$listings = getAllListings();
+$listings = getAllListings($orderBy = 'post_date DESC');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($_POST['viewListingBtn'])) {
-        $_SESSION['listingID'] = $_POST['listingToView'];
-        header("Location: viewListing.php");
-        exit();
-    }
-    elseif (!empty($_POST['viewSellerBtn'])) {
-        $_SESSION['profile'] = $_POST['sellerID'];
-        header("Location: viewProfile.php");
-        exit();
-    }
+  if (!empty($_POST['viewListingBtn'])) {
+    $_SESSION['listingID'] = $_POST['listingToView'];
+    header("Location: viewListing.php");
+    exit();
+  }
+  elseif (!empty($_POST['viewSellerBtn'])) {
+    $_SESSION['profile'] = $_POST['sellerID'];
+    header("Location: viewProfile.php");
+    exit();
+  }
+  elseif (!empty($_POST['sortBtn'])) {
+    $orderBy = $_POST['sortBy'];
+    $listings = getAllListings($orderBy);
+  }
 }
 
 ?>
@@ -48,8 +52,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <title>Home</title> 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
   <link rel="stylesheet" href="activity-styles.css" /> 
+  <div class="row">
+  <div class="col">
+    <form action="home.php" method="post" >
+      <label for="sortBy">Sort by:</label>
+      <select name="sortBy" id="sortBy">
+        <option value="listed_price DESC">Highest Price</option>
+        <option value="listed_price">Lowest Price</option>
+        <option value="post_date DESC">Date</option>
+        <option value="1">Furniture</option>
+        <option value="2">Clothes</option>
+        <option value="3">Books</option>
+      </select>
+      <input type="submit" name="sortBtn" value="Sort" class="btn btn-dark"/>
+    </form>
+  </div>
+</div>
 </head>
 <body>  
+
 
 <div class="row row-cols-3 g-3">
 <?php foreach ($listings as $listing): ?>
