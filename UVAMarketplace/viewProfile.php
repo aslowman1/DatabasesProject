@@ -84,19 +84,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       max-width: 500px;
     }
     .listing-container, .favorites-container {
-      background-color: white;
-      border-radius: 5px;
-      padding: 30px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-      max-width: 700px;
-      margin-left: 20px;
-      margin-right: 20px;
-      float: left;
+        background-color: white;
+        border-radius: 5px;
+        padding: 30px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        max-width: 49%; /* set both containers to take up 49% of the available width */
+        float: left;
+        box-sizing: border-box; /* include padding and border in width calculation */
+        margin-left: 70px;
     }
+
     .favorites-container {
-      margin-left: 0;
-      margin-right: 20px;
-      float: right;
+        float: right;
+        margin-right: 70px;
     }
   </style>
 </head>

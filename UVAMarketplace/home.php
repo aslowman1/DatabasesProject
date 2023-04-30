@@ -3,6 +3,8 @@ require("connect-db.php");
 require('Account-db.php');
 require('User-db.php');
 require('Listing-db.php');
+require('Offer-db.php');
+require('favorites-db.php');
 
 
 if (!isset($_SESSION)) {
@@ -41,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   elseif (!empty($_POST['makeOfferBtn'])) {
     $_SESSION['listingID'] = $_POST['listingToOffer'];
     header("Location: makeOffer.php");
-    exit();
+    exit();  
 }
 }
 
@@ -93,6 +95,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     .card {
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     }
+    .button-group {
+      display: flex;
+      justify-content: center;
+    }
+    .button-group form {
+      margin: 0 5px;
+    }
   </style>
 </head>
 <body>
@@ -111,14 +120,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   Location: <?php echo $listing['location']; ?>
                   Post date: <?php echo $listing['post_date']; ?>
               </p>
-              <form action="home.php" method="post" >
-                  <input type="submit" name="viewListingBtn" value="View Listing" class="btn btn-dark" style="margin-bottom: 5px;"/>
+              <div class="button-group">
+                <form action="home.php" method="post" >
+                  <input type="submit" name="viewListingBtn" value="View Listing" class="btn btn-dark"/>
                   <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
-              </form> 
-              <form action="home.php" method="post" >
+                </form> 
+                <form action="home.php" method="post" >
                   <input type="submit" name="viewSellerBtn" value="View Seller" class="btn btn-dark"/>
                   <input type="hidden" name="sellerID" value="<?php echo $listing['sellerID'];?>" />     
-              </form>  
+                </form>
+              </div>
             </div>
           </div>
         </div>
