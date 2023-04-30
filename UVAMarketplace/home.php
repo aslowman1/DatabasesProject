@@ -38,6 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $orderBy = $_POST['sortBy'];
     $listings = getAllListings($orderBy);
   }
+  elseif (!empty($_POST['makeOfferBtn'])) {
+    $_SESSION['listingID'] = $_POST['listingToOffer'];
+    header("Location: makeOffer.php");
+    exit();
+}
 }
 
 ?>
