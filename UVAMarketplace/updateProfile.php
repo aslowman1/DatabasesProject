@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $year = $_POST['year'];
         $profilePic = $_FILES['profilePic'];
         $username = $_SESSION['username'];
-
         updateProfile($computingID, $name, $year, $profilePic, $username);
         setSessionVars($username);
 

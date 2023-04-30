@@ -37,33 +37,31 @@ function getListingsByUser($computingID) {
     return $results;
 }
 
-function getAllListings($orderBy) {
+function getFavoriteListings($computingID) {
     global $db;
 
-    //Clothes
-    if ($orderBy == "2") {
-        $query = "SELECT * FROM Listing WHERE listingID in (select Clothes.listingID from Clothes where Listing.listingID = Clothes.listingID)";
-    }
-    //Furniture
-    elseif ($orderBy == "1") {
-        $query = "SELECT * FROM Listing WHERE listingID in (select Furniture.listingID from Furniture where Listing.listingID = Furniture.listingID)";
-    }
-    //Textbook
-    elseif ($orderBy == "3") {
-        $query = "SELECT * FROM Listing WHERE listingID in (select Books.listingID from Books where Listing.listingID = Books.listingID)";
-    }
-    else{
-        $query = "SELECT * FROM Listing WHERE 
-            listingID in (select Clothes.listingID from Clothes where Listing.listingID = Clothes.listingID) or
-            listingID in (select Furniture.listingID from Furniture where Listing.listingID = Furniture.listingID) or
-            listingID in (select Books.listingID from Books where Listing.listingID = Books.listingID) ORDER BY $orderBy";
-    }
+    $query = "select * from Listing where exists (select * from favorites where buyerID=:buyerID and Listing.listingID=favorites.listingID)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':buyerID', $computingID);
+    $statement->execute();
+    $results = $statement -> fetchALL();
+    $statement->closeCursor();
+    return $results;
+}
+
+function getAllListings() {
+    global $db;
+
+    $query = "select * from Listing where 
+              listingID in (select Clothes.listingID from Clothes where Listing.listingID = Clothes.listingID) or
+              listingID in (select Furniture.listingID from Furniture where Listing.listingID = Furniture.listingID) or
+              listingID in (select Books.listingID from Books where Listing.listingID = Books.listingID)";
     $statement = $db->prepare($query);
     $statement->execute();
-    $listings = $statement->fetchAll();
+    $results = $statement -> fetchALL();
     $statement->closeCursor();
-    return $listings;
-  }
+    return $results;
+}
 
 function deleteListing($listingID) {
     global $db;
