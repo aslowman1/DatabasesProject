@@ -25,21 +25,26 @@ $listings = getAllListings();
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($_POST['viewListingBtn'])) {
-        $_SESSION['listingID'] = $_POST['listingToView'];
-        header("Location: viewListing.php");
-        exit();
-    }
-    elseif (!empty($_POST['viewSellerBtn'])) {
-        $_SESSION['profile'] = $_POST['sellerID'];
-        header("Location: viewProfile.php");
-        exit();
-    }
-    elseif (!empty($_POST['makeOfferBtn'])) {
-        $_SESSION['listingID'] = $_POST['listingToOffer'];
-        header("Location: makeOffer.php");
-        exit();
-    }
+
+  if (!empty($_POST['viewListingBtn'])) {
+    $_SESSION['listingID'] = $_POST['listingToView'];
+    header("Location: viewListing.php");
+    exit();
+  }
+  elseif (!empty($_POST['viewSellerBtn'])) {
+    $_SESSION['profile'] = $_POST['sellerID'];
+    header("Location: viewProfile.php");
+    exit();
+  }
+  elseif (!empty($_POST['sortBtn'])) {
+    $orderBy = $_POST['sortBy'];
+    $listings = getAllListings($orderBy);
+  }
+  elseif (!empty($_POST['makeOfferBtn'])) {
+    $_SESSION['listingID'] = $_POST['listingToOffer'];
+    header("Location: makeOffer.php");
+    exit();
+  }
 }
 
 ?>

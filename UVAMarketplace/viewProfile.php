@@ -168,8 +168,5 @@ Listings:
     <?php endforeach; ?>
 </table>
 </div>
-
-
-
 </body>
 </html>

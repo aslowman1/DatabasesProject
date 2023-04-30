@@ -49,6 +49,18 @@ function getFavoriteListings($computingID) {
     return $results;
 }
 
+function getAllListings($orderBy) {
+    global $db;
+
+    $query = "select * from Listing where exists (select * from favorites where buyerID=:buyerID and Listing.listingID=favorites.listingID)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':buyerID', $computingID);
+    $statement->execute();
+    $results = $statement -> fetchALL();
+    $statement->closeCursor();
+    return $results;
+}
+
 function getAllListings() {
     global $db;
 
