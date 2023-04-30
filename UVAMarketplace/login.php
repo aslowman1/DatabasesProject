@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       border-radius: 4px;
     }
     input[type="submit"] {
-      background-color: #007bff;
+      background-color: #002F6C;
       color: #fff;
       padding: 10px 20px;
       border: none;
@@ -86,20 +86,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       cursor: pointer;
       text-align: center;
     }
+
+    h3{
+      font-family: Tahoma, Geneva, sans-serif;
+      font-size: 15px;
+      letter-spacing: 2px;
+      word-spacing: 2px;
+      color: #000000;
+      font-weight: 700;
+      text-decoration: none;
+      font-style: normal;
+      font-variant: normal;
+      text-transform: none;  
+    }
   </style>
 </head>
 <body>  
   <div class="container">  
     <h1 style="font-family: Lucida Console, Courier New, monospace; font-size:45px;">UVA Marketplace</h1>
     <hr>
-    <h2 style="font-family: Arial, Helvetica, sans-serif; font-size: 30px"> Log In </h2>
+    <h2 style=" font-family: Tahoma, Geneva, sans-serif; font-size: 25px; letter-spacing: 2px; word-spacing: 2px;
+      color: #000000; font-weight: 700;"> Log In </h2>
     <form action="login.php" method="post"> 
-      <label for="username" style="font-family: Arial, Helvetica, sans-serif;">Username:</label>    
-      <input type="text" id="username" name="username" required /> 
-      <label for="pwd" style="font-family: Arial, Helvetica, sans-serif;" >Password:</label>
-      <input type="password" id="pwd" name="pwd" required /> 
-      <input type="submit" name="loginBtn" value="Sign in" class="btn" style="background-color: #00008B; float: center;"/> 
-      <?php if ($attemptedLogin) { echo("Invallid username or password.\n"); } ?>
+      <h3>
+        <label for="username" style="font-family: Arial, Helvetica, sans-serif;">Username:</label>    
+        <input type="text" id="username" name="username" required /> 
+        <label for="pwd" style="font-family: Arial, Helvetica, sans-serif;" >Password:</label>
+        <input type="password" id="pwd" name="pwd" required /> 
+        <input type="submit" name="loginBtn" value="Sign in" class="btn" style="background-color: #00008B; float: center;"/> 
+        <?php if ($attemptedLogin) { echo("Invallid username or password.\n"); } ?>
+      <h3>
     </form>
   </div>
 

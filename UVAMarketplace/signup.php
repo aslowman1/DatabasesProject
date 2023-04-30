@@ -55,8 +55,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       border-top: 1px solid #ccc;
       text-align: center;
     }
-    h1 {
-      margin-top: 0;
+    
+
+    h1{
+      font-family: "Lucida Console", Courier New, monospace;
+      font-size: 45px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    h2{
+      font-family: Tahoma, Geneva, sans-serif;
+      font-size: 25px;
+      letter-spacing: 2px;
+      word-spacing: 2px;
+      color: #000000;
+      font-weight: 700;
+      text-decoration: none;
+      font-style: normal;
+      font-variant: normal;
+      text-transform: none;
+    }
+
+    h3{
+      font-family: Tahoma, Geneva, sans-serif;
+      font-size: 15px;
+      letter-spacing: 2px;
+      word-spacing: 2px;
+      color: #000000;
+      font-weight: 700;
+      text-decoration: none;
+      font-style: normal;
+      font-variant: normal;
+      text-transform: none;
     }
     form {
       margin-top: 20px;
@@ -77,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       border-radius: 4px;
     }
     input[type="submit"] {
-      background-color: #007bff;
+      background-color: #002F6C;
       color: #fff;
       padding: 10px 20px;
       border: none;
@@ -89,14 +120,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>  
   <div class="container">  
-    <h1 style="color: blue;">UVA Marketplace</h1>
+    <h1>UVA Marketplace</h1>
     <hr>
-    <h1>Signup</h1>
-    <form action="signup.php" method="post">     
+    <h2>Signup</h2>
+    <form action="signup.php" method="post">   
+      <h3>  
       Username: <input type="text" name="username" required /> <br/>
       Password: <input type="password" name="pwd" required /> <br/>
       <input type="submit" name ="signupBtn" value="Submit" class="btn" /> <br/>
       <?php if ($attemptedSignup && !$userAvail) { echo("Username already taken.\n"); } ?>
+      </h3>
     </form>
   </div>
 
