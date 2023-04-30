@@ -21,6 +21,7 @@ function setSessionVars($username) {
     $_SESSION['name'] = $user['name'];
     $_SESSION['year'] = $user['year'];
     $_SESSION['profilePic'] = $user['profilePic'];
+    $_SESSION['profile'] = $user['computingID'];
 }
 
 function isUser($username) {
