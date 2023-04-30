@@ -20,18 +20,6 @@ function getNextBookID() {
     return $bookID;
 }
 
-function getBookByListingID($listingID) {
-    global $db;
-
-    $query = "select * from Books where listingID=:listingID";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':listingID', $listingID);
-    $statement->execute();
-    $results = $statement -> fetch();
-    $statement->closeCursor();
-    return $results;
-}
-
 function addBook($category, $bookTitle, $course, $IBSN, $listingID) {
     global $db;
 
@@ -41,19 +29,6 @@ function addBook($category, $bookTitle, $course, $IBSN, $listingID) {
     $statement = $db->prepare($query);
     $statement->bindValue(':bookID', $bookID);
     $statement->bindValue(':categoryID', $category);
-    $statement->bindValue(':bookTitle', $bookTitle);
-    $statement->bindValue(':course', $course);
-    $statement->bindValue(':IBSN', $IBSN);
-    $statement->bindValue(':listingID', $listingID);
-    $statement->execute();
-    $statement->closeCursor();
-}
-
-function updateBook( $bookTitle, $course, $IBSN, $listingID) {
-    global $db;
-
-    $query = "update Books set name=:bookTitle, course=:course, IBSN=:IBSN where listingID=:listingID";
-    $statement = $db->prepare($query);
     $statement->bindValue(':bookTitle', $bookTitle);
     $statement->bindValue(':course', $course);
     $statement->bindValue(':IBSN', $IBSN);

@@ -20,18 +20,6 @@ function getNextFurnitureID() {
     return $furnitureID;
 }
 
-function getFurnitureByListingID($listingID) {
-    global $db;
-
-    $query = "select * from Furniture where listingID=:listingID";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':listingID', $listingID);
-    $statement->execute();
-    $results = $statement -> fetch();
-    $statement->closeCursor();
-    return $results;
-}
-
 function addFurniture($category, $material, $dimensions, $listingID) {
     global $db;
 
@@ -41,18 +29,6 @@ function addFurniture($category, $material, $dimensions, $listingID) {
     $statement = $db->prepare($query);
     $statement->bindValue(':furnitureID', $furnitureID);
     $statement->bindValue(':categoryID', $category);
-    $statement->bindValue(':material', $material);
-    $statement->bindValue(':dimensions', $dimensions);
-    $statement->bindValue(':listingID', $listingID);
-    $statement->execute();
-    $statement->closeCursor();
-}
-
-function updateFurniture($material, $dimensions, $listingID) {
-    global $db;
-
-    $query = "update Furniture set material=:material, dimensions=:dimensions where listingID=:listingID";
-    $statement = $db->prepare($query);
     $statement->bindValue(':material', $material);
     $statement->bindValue(':dimensions', $dimensions);
     $statement->bindValue(':listingID', $listingID);

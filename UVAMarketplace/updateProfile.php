@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $year = $_POST['year'];
         $profilePic = $_FILES['profilePic'];
         $username = $_SESSION['username'];
+
         updateProfile($computingID, $name, $year, $profilePic, $username);
         setSessionVars($username);
 
@@ -52,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div>  
     <h1>Update Profile</h1>
     <form action="updateProfile.php" method="post" enctype="multipart/form-data">     
-      <input type="hidden" name="computingID" value="<?=$_SESSION['computingID']?>" minlength="5" maxlength="7" required />
+      <input type="hidden" name="computingID" value="<?=$_SESSION['computingID']?>" minlength="6" maxlength="7" required />
       Name: <input type="text" name="name" value ="<?=$_SESSION['name']?>" required /> <br/>
 
       <input type="radio" name="year" value="1" <?php echo ($_SESSION['year']=="1") ? 'checked="checked"':'';?>>

@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     elseif (!empty($_POST['editListingBtn'])) {
-        $_SESSION['listingID'] = $_POST['listingToEdit'];
-        header("Location: updateListing.php");
+        $_SESSION['listingID'] = $_POST['listingToView'];
+        header("Location: viewListing.php");
         exit();
     }
     elseif (!empty($_POST['deleteListingBtn'])) {

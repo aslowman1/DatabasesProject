@@ -19,18 +19,6 @@ function getNextClothesID() {
     return $clothesID;
 }
 
-function getClothesByListingID($listingID) {
-    global $db;
-
-    $query = "select * from Clothes where listingID=:listingID";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':listingID', $listingID);
-    $statement->execute();
-    $results = $statement -> fetch();
-    $statement->closeCursor();
-    return $results;
-}
-
 function addClothes($category, $size, $listingID) {
     global $db;
 
@@ -40,17 +28,6 @@ function addClothes($category, $size, $listingID) {
     $statement = $db->prepare($query);
     $statement->bindValue(':clothesID', $clothesID);
     $statement->bindValue(':categoryID', $category);
-    $statement->bindValue(':size', $size);
-    $statement->bindValue(':listingID', $listingID);
-    $statement->execute();
-    $statement->closeCursor();
-}
-
-function updateClothes($size, $listingID) {
-    global $db;
-
-    $query = "update Clothes set size=:size where listingID=:listingID";
-    $statement = $db->prepare($query);
     $statement->bindValue(':size', $size);
     $statement->bindValue(':listingID', $listingID);
     $statement->execute();
