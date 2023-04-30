@@ -80,9 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div id="material">Material: <br> <input type="text" id="materialText" name="materialText"/> <br> </div>
       <div id="dimensions"> Dimensions: <br> <input type="text" id="dimensionsText" name="dimensionsText"/> <br> </div>
       
-      <div id="book">Textbook Title: <br> <input type="text" id="bookTitleText" name="bookTitleText"/> <br/> </div>
+      <div id="book">Book Title: <br> <input type="text" id="bookTitleText" name="bookTitleText"/> <br/> </div>
       <div id="course">Course: <br> <input type="text" id="courseText" name="courseText"/> <br/> </div>
-      <div id="IBSN">IBSN: <br> <input type="text" id="IBSNText" name="IBSNText" /> <br> </div>
+      <div id="IBSN">ISBN: <br> <input type="text" id="IBSNText" name="IBSNText" /> <br> </div>
     
       Condition: <br>
       <select name="condition">
