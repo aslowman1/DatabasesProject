@@ -87,26 +87,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       background-color: #DA8E41;
     }
     .listing-container {
-        background-color: white;
-        border-radius: 5px;
-        padding: 30px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        max-width: 45%; /* set both containers to take up 49% of the available width */
-        float: left;
-        box-sizing: border-box; /* include padding and border in width calculation */
-        margin-left: 40px;
-        background-color: #DA8E41;
+    background-color: white;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    max-width: 45%; /* set both containers to take up 49% of the available width */
+    float: left;
+    box-sizing: border-box; /* include padding and border in width calculation */
+    margin-right: 40px;
+    margin-bottom: 20px;
+    background-color: #DA8E41;
     }
 
     .favorites-container {
-        background-color: white;
-        border-radius: 5px;
-        padding: 30px;
-        float: right;
-        margin-right: 40px;
-        box-sizing: border-box;
-        max-width: 45%;
-        background-color: #DA8E41;
+      background-color: white;
+      border-radius: 5px;
+      padding: 30px;
+      float: left;
+      box-sizing: border-box;
+      max-width: 45%;
+      margin-right: 40px;
+      margin-bottom: 20px;
+      background-color: #DA8E41;
+
+    }
+    .offers-container {
+      background-color: white;
+      border-radius: 5px;
+      padding: 30px;
+      float: right;
+      max-width: 45%;
+      box-sizing: border-box;
+      margin-right: 100px;
+      background-color: #DA8E41;
+      display: flex; /* add display: flex */
+      flex-direction: column; /* add flex-direction */
+    }
+
+    .offers-title {
+        margin-bottom: 10px; /* add margin-bottom to create space between the title and the table */
+    }
+    table {
+      flex-grow: 1; /* add flex-grow: 1 */
     }
     h2{
       font-family: Tahoma, Geneva, sans-serif;
@@ -263,7 +285,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <?php if($isMyProfile) : ?>
 <div class="col favorites-container">  
-  <h2> Favorites:</h2>
+  <h2> Favorites</h2>
   <table class="table table-bordered table-striped">
       <thead>
       <tr style="background-color:white">
@@ -296,10 +318,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </tr>
     <?php endforeach; ?>
 </table>
+</div>
 
+
+<div class="col offers-container">  
+<div class="offers-title"><h2>Offers</h2></div>
     <table class="table table-bordered table-striped">
       <thead>
-      <tr style="background-color:white">
+      <tr style="background-color:white; font-family: JetBrains Mono,monospace;">
         <th> Image </th>    
         <th >Title </th>
         <th> Listed Price </th>   
@@ -314,18 +340,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               $offerStatus = getOfferStatus($offer['offerID']);
         ?>
       <tr>
-        <td><img src="../itemPics/<?=$listing['itemPic']?>" width=40 height=40></td>
-        <td><?php echo $listing['title']; ?></td>  
-        <td>$<?php echo $listing['listed_price']; ?></td>  
-        <td>$<?php echo $offer['offer_price']; ?></td> 
-        <td><?php  echo $offerStatus[0][0]; ?></td> 
-        <td> 
+        <td style="background-color:white; font-family: Lucida Console, Courier New, monospace; font-weight: bold;"><img src="../itemPics/<?=$listing['itemPic']?>" width=40 height=40></td>
+        <td style="background-color:white; font-family: Lucida Console, Courier New, monospace; font-weight: bold;" ><?php echo $listing['title']; ?></td>  
+        <td style="background-color:white; font-family: Lucida Console, Courier New, monospace; font-weight: bold;">$<?php echo $listing['listed_price']; ?></td>  
+        <td style="background-color:white; font-family: Lucida Console, Courier New, monospace; font-weight: bold;">$<?php echo $offer['offer_price']; ?></td> 
+        <td style="background-color:white; font-family: Lucida Console, Courier New, monospace; font-weight: bold;"><?php  echo $offerStatus[0][0]; ?></td> 
+        <td style="background-color:white"> 
           <form action="viewProfile.php" method="post" >
             <input type="submit" name="viewListingBtn" value="View" class="btn btn-dark" style="font-family: JetBrains Mono,monospace;"/>
             <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
           </form>  
         </td>  
-        <td> 
+        <td style="background-color:white"> 
           <form action="viewProfile.php" method="post" >
             <input type="submit" name="makeOfferBtn" value="Offer" class="btn btn-dark" style="font-family: JetBrains Mono,monospace;"/>
             <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />     
@@ -333,46 +359,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </td>
       </tr>
     <?php endforeach; ?>
-</table>
+    </table>
 
-    <table class="table table-bordered table-striped">
-      <thead>
-      <tr style="background-color:white">
-        <th> Image </th>    
-        <th >Title </th>
-        <th> Listed Price </th>   
-        <th> Offer Price </th>
-        <th> Offer Status </th>
-        <th> View </th>
-        <th> Update Offer </th>
-      </tr>
-      </thead>
-      <?php foreach ($userOffers as $offer): ?>
-        <?php $listing = getListingByID($offer['listingID']); 
-              $offerStatus = getOfferStatus($offer['offerID']);
-        ?>
-      <tr>
-        <td><img src="../itemPics/<?=$listing['itemPic']?>" width=40 height=40></td>
-        <td><?php echo $listing['title']; ?></td>  
-        <td>$<?php echo $listing['listed_price']; ?></td>  
-        <td>$<?php echo $offer['offer_price']; ?></td> 
-        <td><?php  echo $offerStatus[0][0]; ?></td> 
-        <td> 
-          <form action="viewProfile.php" method="post" >
-            <input type="submit" name="viewListingBtn" value="View" class="btn btn-dark"/>
-            <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
-          </form>  
-        </td>  
-        <td> 
-          <form action="viewProfile.php" method="post" >
-            <input type="submit" name="makeOfferBtn" value="Offer" class="btn btn-dark"/>
-            <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />     
-          </form>  
-        </td>
-      </tr>
-    <?php endforeach; ?>
-</table>
-</div>
+
 <?php endif; ?>
 
 
