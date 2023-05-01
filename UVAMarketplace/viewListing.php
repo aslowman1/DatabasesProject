@@ -238,6 +238,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
 
     <?php else : //is my listing?>
+      <form action="viewProfile.php" method="post">
+        <div class = "button">
+                <input type="submit" name="editListingBtn" value="Edit" class="btn" style="font-family: JetBrains Mono,monospace;"/>
+    </div>
+                <input type="hidden" name="listingToEdit" value="<?php echo $listing['listingID'];?>" />
+       </form>
       <p> Offers: </p>
         <div class="row justify-content-center">  
         <table class="table table-bordered table-striped" style="width:70%">
