@@ -43,11 +43,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <link rel="stylesheet" href="activity-styles.css" /> 
   <style>
      body {
-      background-image: url("tundy.jpeg");
-      background-size: cover;
+      background-image: url('tundy.jpeg'); 
+			background-repeat: no-repeat;
+			background-size: cover;
+			height: 100vh;
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
     }
     .container {
-      background-color: white;
+      background-color: #DA8E41;
       border-radius: 10px;
       padding: 20px;
       margin: 50px auto;
@@ -77,15 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       border: 1px solid #ccc;
       border-radius: 4px;
     }
-    input[type="submit"] {
-      background-color: #002F6C;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      text-align: center;
-    }
 
     h3{
       font-family: Tahoma, Geneva, sans-serif;
@@ -98,12 +98,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       font-style: normal;
       font-variant: normal;
       text-transform: none;  
+      font-weight: bold;
+    }
+    .button{
+      align-items: center;
+      appearance: none;
+      background-color: #FCFCFD;
+      border-radius: 4px;
+      border-width: 0;
+      box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+      box-sizing: border-box;
+      color: #36395A;
+      cursor: pointer;
+      display: inline-flex;
+      font-family: "JetBrains Mono",monospace;
+      height: 48px;
+      justify-content: center;
+      line-height: 1;
+      list-style: none;
+      overflow: hidden;
+      padding-left: 16px;
+      padding-right: 16px;
+      position: relative;
+      text-align: left;
+      text-decoration: none;
+      transition: box-shadow .15s,transform .15s;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      white-space: nowrap;
+      will-change: box-shadow,transform;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .button:focus {
+      box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    }
+
+    .button:hover {
+      box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+      transform: translateY(-2px);
+    }
+
+    .button:active {
+      box-shadow: #D6D6E7 0 3px 7px inset;
+      transform: translateY(2px);
     }
   </style>
 </head>
 <body>  
   <div class="container">  
-    <h1 style="font-family: Lucida Console, Courier New, monospace; font-size:45px;">UVA Marketplace</h1>
+    <h1 style="font-family: Lucida Console, Courier New, monospace; font-size:45px;  font-weight: bold;">UVA Marketplace</h1>
     <hr>
     <h2 style=" font-family: Tahoma, Geneva, sans-serif; font-size: 25px; letter-spacing: 2px; word-spacing: 2px;
       color: #000000; font-weight: 700;"> Log In </h2>
@@ -113,8 +159,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="text" id="username" name="username" required /> 
         <label for="pwd" style="font-family: Arial, Helvetica, sans-serif;" >Password:</label>
         <input type="password" id="pwd" name="pwd" required /> 
-        <input type="submit" name="loginBtn" value="Sign in" class="btn" style="background-color: #00008B; float: center;"/> 
-        <?php if ($attemptedLogin) { echo("Invallid username or password.\n"); } ?>
+        <div class="button">
+            <input type="submit" name="loginBtn" value="Sign in" class="btn" /> 
+            <?php if ($attemptedLogin) { echo("Invallid username or password.\n"); } ?>
       <h3>
     </form>
   </div>

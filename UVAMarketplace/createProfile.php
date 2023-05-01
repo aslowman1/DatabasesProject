@@ -38,9 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <title>Create Profile</title> 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
   <link rel="stylesheet" href="activity-styles.css" /> 
-	<style>
-		body {
-			background-image: url('tundy.jpeg'); 
+  <style>
+    body {
+		background-image: url('tundy.jpeg'); 
 			background-repeat: no-repeat;
 			background-size: cover;
 			height: 100vh;
@@ -51,72 +51,112 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-		}
+    }
 
-		form {
-			background-color: #fff;
-			padding: 30px;
-			border-radius: 10px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			text-align: center;
-		}
 
-		h1 {
-			margin: 0 0 30px;
-			font-size: 32px;
-			font-weight: bold;
-		}
+    h1{
+      font-family: Tahoma, Geneva, sans-serif;
+      font-size: 25px;
+      letter-spacing: 2px;
+      word-spacing: 2px;
+      color: #000000;
+      font-weight: 700;
+      text-decoration: none;
+      font-style: normal;
+      font-variant: normal;
+      text-transform: none;
+    }
 
-		input,
-		select {
-			padding: 10px;
-			margin-bottom: 20px;
-			width: 100%;
-			box-sizing: border-box;
-			border: none;
-			border-radius: 5px;
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-		}
+    p, select, label, input, option{
+      font-family: "Lucida Console", Courier New, monospace;
+      font-size: 15px;
+      text-align: center;
+      font-weight: bold;
+      line-height: .5;
+    }
 
-		textarea {
-			padding: 10px;
-			margin-bottom: 20px;
-			width: 100%;
-			box-sizing: border-box;
-			border: none;
-			border-radius: 5px;
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-			resize: none;
-			height: 100px;
-		}
+    h3{
+      font-family: Tahoma, Geneva, sans-serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      word-spacing: 2px;
+      color: #000000;
+      font-weight: 700;
+      text-decoration: none;
+      font-style: normal;
+      font-variant: normal;
+      text-transform: none;
+    }
+    
 
-		button {
-			padding: 10px 20px;
-			background-color: #333;
-			color: #fff;
-			border: none;
-			border-radius: 5px;
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-			cursor: pointer;
-			font-size: 16px;
-		}
+    .card {
+      padding-top: 25px;
+      box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.6);
+      max-width: 600px;
+      margin: 100px auto;
+      text-align: center;
+      font-family: arial;
+      background-color: #DA8E41;
+	  padding: 30px;
+    }
 
-		button:hover {
-			background-color: #444;
-		}
-	</style>
+    .button{
+      align-items: center;
+      appearance: none;
+      background-color: #FCFCFD;
+      border-radius: 4px;
+      border-width: 0;
+      box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+      box-sizing: border-box;
+      color: #36395A;
+      cursor: pointer;
+      display: inline-flex;
+      font-family: "JetBrains Mono",monospace;
+      height: 48px;
+      justify-content: center;
+      line-height: 1;
+      list-style: none;
+      overflow: hidden;
+      padding-left: 16px;
+      padding-right: 16px;
+      position: relative;
+      text-align: left;
+      text-decoration: none;
+      transition: box-shadow .15s,transform .15s;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      white-space: nowrap;
+      will-change: box-shadow,transform;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .button:focus {
+      box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    }
+
+    .button:hover {
+      box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+      transform: translateY(-2px);
+    }
+
+    .button:active {
+      box-shadow: #D6D6E7 0 3px 7px inset;
+      transform: translateY(2px);
+    }
+
+
+  </style>
 </head>
 <body>  
-  <div>  
+  <div class ="card">  
     <form action="createProfile.php" method="post" enctype="multipart/form-data">     
       <h1>Create Profile</h1>
-      Computing ID: <input type="text" name="computingID" minlength="5" maxlength="7" required /> <br/>
-      Name: <input type="text" name="name" required /> <br/>
+      <p>Computing ID: <input type="text" name="computingID" minlength="6" maxlength="7" required /></p> <br/>
+      <p>Name: <input type="text" name="name" required /> </p><br/>
 
-      Year: 
+      <p>Year: </p>
       <select name="year" required>
   			<option value="">--Select Year--</option>
   			<option value="1">1</option>
@@ -124,9 +164,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   			<option value="3">3</option>
   			<option value="4">4</option>
 	  </select>
-
-      Profile Picture: <input type="file" name="profilePic" accept="image/png, image/jpeg, image/jpg"> <br/>
-      <input type="submit" name ="createProfileBtn" value="Submit" class="btn" /> <br/>
+	  <div class="mb-3">
+            <label for="profilePic" class="form-label">Profile Picture:</label>
+            <input type="file" name="profilePic" id="profilePic" accept="image/png, image/jpeg, image/jpg" class="form-control">
+    	</div>
+	  <div class="button">
+      		<input type="submit" name ="createProfileBtn" value="Submit" class="btn" /> <br/>
+</div>
     </form>
   </div>
 

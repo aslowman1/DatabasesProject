@@ -47,10 +47,7 @@
 
 <nav class="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="home.php" style="font-family: Lucida Console, Courier New, monospace; 
-            padding: 15px; font-size:25px, color:white; float: none;
-  position: center">UVA Marketplace
-            </a>
+            <a class="navbar-brand" href="home.php" style="font-family: Lucida Console, Courier New, monospace; padding: 15px; font-size:25px, color:white; float: none; position: center">UVA Marketplace</a>
             <div class="nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" aria-expanded="false" style="color: white;"><img src="../profilePics/<?=$_SESSION['profilePic']?>" width="40" height="40" class="rounded-circle"> </a>
