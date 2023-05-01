@@ -3,6 +3,8 @@ require("connect-db.php");
 require('Account-db.php');
 require('User-db.php');
 require('Listing-db.php');
+require('Offer-db.php');
+require('favorites-db.php');
 
 
 if (!isset($_SESSION)) {
@@ -41,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   elseif (!empty($_POST['makeOfferBtn'])) {
     $_SESSION['listingID'] = $_POST['listingToOffer'];
     header("Location: makeOffer.php");
-    exit();
+    exit();  
 }
 }
 
@@ -107,6 +109,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </div>
   <?php endforeach; ?>
 </div>
+  <style>
+    body {
+      background-image: url("homepage_large.jpg");
+      background-size: cover;
+    }
+    .card {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+    .button-group {
+      display: flex;
+      justify-content: center;
+    }
+    .button-group form {
+      margin: 0 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row row-cols-3 g-3">
+      <?php foreach ($listings as $listing): ?>
+        <div class="col">
+          <div class="card h-100" >
+            <img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto;" src="../itemPics/<?=$listing['itemPic']?>" class="card-img-top"/>
+            <div class="card-body">
+              <h5 class="card-title"><?php echo $listing['title']; ?></h5>
+              <p class="card-text" >
+                  Seller: <?php echo getUser($listing['sellerID'])['name']; ?> <br>
+                  Price: $<?php echo $listing['listed_price']; ?> <br>
+                  Description: <?php echo $listing['description']; ?> <br>
+                  Location: <?php echo $listing['location']; ?>
+                  Post date: <?php echo $listing['post_date']; ?>
+              </p>
+              <div class="button-group">
+                <form action="home.php" method="post" >
+                  <input type="submit" name="viewListingBtn" value="View Listing" class="btn btn-dark"/>
+                  <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
+                </form> 
+                <form action="home.php" method="post" >
+                  <input type="submit" name="viewSellerBtn" value="View Seller" class="btn btn-dark"/>
+                  <input type="hidden" name="sellerID" value="<?php echo $listing['sellerID'];?>" />     
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</body>
 
 
 </body>
