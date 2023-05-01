@@ -47,7 +47,7 @@
 
 <nav class="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="home.php" style="font-family: Lucida Console, Courier New, monospace; padding: 15px; font-size:25px, color:FFFFFF">UVA Marketplace
+            <a class="navbar-brand" href="home.php" style="font-family: Lucida Console, Courier New, monospace; padding: 15px; font-size:25px, color:white;">UVA Marketplace
             </a>
             <div class="nav">
                 <a class="nav-link" href="createListing.php" style="color: #FFFFFF">Create Listing</a> 

@@ -41,12 +41,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <link rel="stylesheet" href="activity-styles.css" /> 
   <style>
      body {
-      background-image: url("tundy.jpeg");
-      background-size: cover;
-      background-position: center;
+      background-image: url('tundy.jpeg'); 
+			background-repeat: no-repeat;
+			background-size: cover;
+			height: 100vh;
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
     }
     .container {
-      background-color: white;
+      background-color: #DA8E41;
       border-radius: 10px;
       padding: 20px;
       margin: 50px auto;
@@ -107,14 +115,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       border: 1px solid #ccc;
       border-radius: 4px;
     }
-    input[type="submit"] {
-      background-color: #002F6C;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
+    .button{
+      align-items: center;
+      appearance: none;
+      background-color: #FCFCFD;
       border-radius: 4px;
+      border-width: 0;
+      box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+      box-sizing: border-box;
+      color: #36395A;
       cursor: pointer;
-      text-align: center;
+      display: inline-flex;
+      font-family: "JetBrains Mono",monospace;
+      height: 48px;
+      justify-content: center;
+      line-height: 1;
+      list-style: none;
+      overflow: hidden;
+      padding-left: 16px;
+      padding-right: 16px;
+      position: relative;
+      text-align: left;
+      text-decoration: none;
+      transition: box-shadow .15s,transform .15s;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      white-space: nowrap;
+      will-change: box-shadow,transform;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .button:focus {
+      box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    }
+
+    .button:hover {
+      box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+      transform: translateY(-2px);
+    }
+
+    .button:active {
+      box-shadow: #D6D6E7 0 3px 7px inset;
+      transform: translateY(2px);
     }
   </style>
 </head>
@@ -127,7 +171,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <h3>  
       Username: <input type="text" name="username" required /> <br/>
       Password: <input type="password" name="pwd" required /> <br/>
-      <input type="submit" name ="signupBtn" value="Submit" class="btn" /> <br/>
+      <div class="button">
+          <input type="submit" name ="signupBtn" value="Sign Up" class="btn" /> <br/>
+  </div>
       <?php if ($attemptedSignup && !$userAvail) { echo("Username already taken.\n"); } ?>
       </h3>
     </form>
