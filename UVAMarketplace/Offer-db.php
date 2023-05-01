@@ -86,6 +86,21 @@ function getAllOffersForListing($listingID) {
     return $results;
 }
 
+function getFinalOffer($listingID) {
+    global $db;
+
+    $status = "Accepted";
+    $query = "select * from Offer where Offer.listingID=:listingID and 
+            Offer.offerID in (select evaluates.offerID from evaluates where offer_status=:status)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':listingID', $listingID);
+    $statement->bindValue(':status', $status);
+    $statement->execute();
+    $results = $statement -> fetchALL();
+    $statement->closeCursor();
+    return $results;
+}
+
 function addOffer($listingID, $buyerID, $offerPrice, $sellerID) {
     global $db;
     $offerPrice = (float)$offerPrice;
@@ -150,6 +165,18 @@ function rejectOffer($offerID) {
     global $db;
 
     $status = "Rejected";
+    $query = "update evaluates set offer_status=:status where offerID=:offerID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':offerID', $offerID);
+    $statement->bindValue(':status', $status);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function acceptOffer($offerID) {
+    global $db;
+
+    $status = "Accepted";
     $query = "update evaluates set offer_status=:status where offerID=:offerID";
     $statement = $db->prepare($query);
     $statement->bindValue(':offerID', $offerID);

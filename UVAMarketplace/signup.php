@@ -177,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <?php if ($attemptedSignup && !$userAvail) { echo("Username already taken.\n"); } ?>
       </h3>
     </form>
-    <p>Already have an account? <b><a href="login.php" target="_blank">Login here!</a></b></p>
+    <p>Already have an account? <b><a href="login.php" target="_self">Login here!</a></b></p>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

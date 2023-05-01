@@ -44,7 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['listingID'] = $_POST['listingToOffer'];
     header("Location: makeOffer.php");
     exit();  
-}
+  }
+
 }
 
 ?>
@@ -74,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form action="home.php" method="post">
           <div class="input-group">
             <label for="sortBy" class="input-group-text">Sort by:</label>
-            <select name="sortBy" id="sortBy" class="form-select">
+            <select name="sortBy" class="form-select">
               <option value="listed_price DESC">Price(High to Low)</option>
               <option value="listed_price">Price (Low to High)</option>
               <option value="post_date DESC">Date</option>
@@ -82,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               <option value="2">Clothes</option>
               <option value="3">Books</option>
             </select>
-            <button type="submit" name="sortBtn" class="btn btn-dark">Sort</button>
+            <button type="submit" name="sortBtn" value="Sort" class="btn btn-dark">Sort</button>
           </div>
         </form>
       </div>
@@ -165,6 +166,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div class="container">
     <div class="row row-cols-4 g-3">
       <?php foreach ($listings as $listing): ?>
+        <?php if (!getFinalOffer($listing['listingID'])) : ?>
+
         <div class="col">
           <div class="card h-100" >
             <img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto; padding-top: 5px" src="../itemPics/<?=$listing['itemPic']?>" class="card-img-top"/>
@@ -203,6 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
           </div>
         </div>
+        <?php endif; ?>
       <?php endforeach; ?>
     </div>
   </div>

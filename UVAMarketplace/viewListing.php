@@ -29,6 +29,12 @@ elseif (!$_SESSION['listingID']) {
 $listing = getListingByID($_SESSION['listingID']);
 $listingID = $listing['listingID'];
 $isMyListing = $listing['sellerID'] == $_SESSION['computingID'];
+$isComplete = false;
+$finalOffer = getFinalOffer($listing['listingID']);
+if ($finalOffer) {
+  $isComplete = true;
+}
+
 if ($isMyListing) {
     $offers = getPendingOffersForListing($listing['listingID']);
 }
@@ -65,7 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $offers = getPendingOffersForListing($listing['listingID']);
 
     }    
-
+    elseif (!empty($_POST['acceptOfferBtn'])) {
+      acceptOffer($_POST['offerToAccept']);
+      header("Location: viewListing.php");
+      exit();
+    }    
 }
 
 
@@ -192,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h3>Date posted: </h3> <?php echo $listing['post_date']?> <br>
     <h3>Location: </h3> <?php echo $listing['location']?> <br>
     <h3>Condition: </h3> <?php echo $listing['condition']?> <br>
-    <h3>Price:</h3> $<?php echo $listing['listed_price']?> <br>
+    <h3>Listed Price:</h3> $<?php echo $listing['listed_price']?> <br>
 
     <?php if($listing['categoryID'] == "2") : ?>
       <p>Size: <?php echo $clothes['size']?> </p><br>
@@ -208,6 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <?php endif; ?>
 
+  <?php if (!$isComplete) : ?>
     <?php if(!$isMyListing) : ?>
         <form action="viewListing.php" method="post" >
           <div class = "button">
@@ -251,7 +262,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   <input type="submit" name="acceptOfferBtn" value="Accept" class="btn btn-success"/>
                 </div>
                 <input type="hidden" name="offerToAccept" value="<?php echo $offer['offerID'];?>" />  
-
               </form>  
             </td> 
             <td> 
@@ -265,8 +275,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           </tr>
         <?php endforeach; ?>
     </table>
-    </div>
     <?php endif; ?>
+    <?php else: ?>
+      <p>Sold price: $<?php echo($finalOffer[0]['offer_price']);?> </p><br>
+    <?php endif; ?>
+    </div>
+
+
+
    </div>      
 </body>
 </html>
