@@ -177,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 
-
+<?php if($isMyProfile) : ?>
 <div class="col-4 favorites-container">  
   <h2> Favorites:</h2>
   <table class="table table-bordered table-striped">
@@ -251,6 +251,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php endforeach; ?>
 </table>
 </div>
+<?php endif; ?>
+
 
 
 
