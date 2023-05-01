@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html>
+<?php include 'navbar.php';?>
 <head>
   <meta charset="utf-8">   
   <meta http-equiv="X-UA-Compatible" content="IE=edge">  <!-- required to handle IE -->
@@ -75,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <div class="input-group">
             <label for="sortBy" class="input-group-text">Sort by:</label>
             <select name="sortBy" id="sortBy" class="form-select">
-              <option value="listed_price DESC">Highest Price</option>
-              <option value="listed_price">Lowest Price</option>
+              <option value="listed_price DESC">Price(High to Low)</option>
+              <option value="listed_price">Price (Low to High)</option>
               <option value="post_date DESC">Date</option>
               <option value="1">Furniture</option>
               <option value="2">Clothes</option>
@@ -178,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <div class="col-sm" style="text-align: right">
                     <h1>Price:</h1> $<?php echo $listing['listed_price']; ?> <br>
-                    <h1>Location:</h1> <?php echo $listing['location']; ?>
+                    <h1>Location:</h1> <?php echo $listing['location']; ?> <br>
                     <h1>Post date:</h1> <?php echo $listing['post_date']; ?>
                 </div>
                 </p>
@@ -191,7 +192,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="submit" name="viewSellerBtn" value="View Seller" class="button"/>
                     <input type="hidden" name="sellerID" value="<?php echo $listing['sellerID'];?>" />     
                   </form>
-                </div>
+                  <form action="home.php" method="post" >
+                <?php if(!($listing['sellerID'] == $_SESSION['computingID'])) : ?>
+                  <input type="submit" name="makeOfferBtn" value="Make Offer" class="btn btn-dark"/>
+                  <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />
+                <?php endif; ?>
+                </form>
+              </div>
               </div>
             </div>
           </div>
@@ -201,4 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </div>
 </body>
 
+
+
+</body>
 </html>
