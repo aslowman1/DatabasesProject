@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div>  
     <form action="createProfile.php" method="post" enctype="multipart/form-data">     
       <h1>Create Profile</h1>
-      Computing ID: <input type="text" name="computingID" minlength="6" maxlength="7" required /> <br/>
+      Computing ID: <input type="text" name="computingID" minlength="5" maxlength="7" required /> <br/>
       Name: <input type="text" name="name" required /> <br/>
 
       Year: 

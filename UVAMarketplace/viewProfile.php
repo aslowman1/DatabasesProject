@@ -220,6 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <th >Title </th>
         <th> Listed Price </th>   
         <th> Offer Price </th>
+        <th> Offer Status </th>
         <th> View </th>
         <th> Update Offer </th>
       </tr>
@@ -233,6 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <td><?php echo $listing['title']; ?></td>  
         <td>$<?php echo $listing['listed_price']; ?></td>  
         <td>$<?php echo $offer['offer_price']; ?></td> 
+        <td><?php  echo $offerStatus[0][0]; ?></td> 
         <td> 
           <form action="viewProfile.php" method="post" >
             <input type="submit" name="viewListingBtn" value="View" class="btn btn-dark"/>

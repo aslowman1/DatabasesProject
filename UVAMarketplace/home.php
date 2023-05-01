@@ -79,36 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>  
 
 
-<div class="row row-cols-3 g-3">
-<?php foreach ($listings as $listing): ?>
-  <div class="col">
-    <div class="card h-100" >
-    <img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto;" src="../itemPics/<?=$listing['itemPic']?>" class="card-img-top"/>
-      <div class="card-body">
-        <h5 class="card-title"><?php echo $listing['title']; ?></h5>
-        <p class="card-text">
-            Seller: <?php echo getUser($listing['sellerID'])['name']; ?> <br>
-            Price: $<?php echo $listing['listed_price']; ?> <br>
-            Description: <?php echo $listing['description']; ?> <br>
-            Location: <?php echo $listing['location']; ?>
-            Post date: <?php echo $listing['post_date']; ?>
-        </p>
-        <form action="home.php" method="post" >
-            <input type="submit" name="viewListingBtn" value="View Listing" class="btn btn-dark"/>
-            <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
-
-            <input type="submit" name="viewSellerBtn" value="View Seller" class="btn btn-dark"/>
-            <input type="hidden" name="sellerID" value="<?php echo $listing['sellerID'];?>" />   
-            <?php if(!($listing['sellerID'] == $_SESSION['computingID'])) : ?>
-                <input type="submit" name="makeOfferBtn" value="Make Offer" class="btn btn-dark"/>
-                <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />
-            <?php endif; ?>
-        </form>
-      </div>
-    </div>
-  </div>
-  <?php endforeach; ?>
-</div>
   <style>
     body {
       background-image: url("homepage_large.jpg");
@@ -139,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   Seller: <?php echo getUser($listing['sellerID'])['name']; ?> <br>
                   Price: $<?php echo $listing['listed_price']; ?> <br>
                   Description: <?php echo $listing['description']; ?> <br>
-                  Location: <?php echo $listing['location']; ?>
+                  Location: <?php echo $listing['location']; ?> <br>
                   Post date: <?php echo $listing['post_date']; ?>
               </p>
               <div class="button-group">
@@ -151,6 +121,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   <input type="submit" name="viewSellerBtn" value="View Seller" class="btn btn-dark"/>
                   <input type="hidden" name="sellerID" value="<?php echo $listing['sellerID'];?>" />     
                 </form>
+                <form action="home.php" method="post" >
+                <?php if(!($listing['sellerID'] == $_SESSION['computingID'])) : ?>
+                  <input type="submit" name="makeOfferBtn" value="Make Offer" class="btn btn-dark"/>
+                  <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />
+                <?php endif; ?>
+                </form>
               </div>
             </div>
           </div>
@@ -159,6 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
   </div>
 </body>
+
 
 
 </body>
