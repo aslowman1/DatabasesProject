@@ -120,15 +120,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       box-sizing: border-box;
       margin-right: 100px;
       background-color: #DA8E41;
-      display: flex; /* add display: flex */
-      flex-direction: column; /* add flex-direction */
+      display: flex; 
+      flex-direction: column; 
     }
 
     .offers-title {
-        margin-bottom: 10px; /* add margin-bottom to create space between the title and the table */
+        margin-bottom: 10px; 
     }
     table {
-      flex-grow: 1; /* add flex-grow: 1 */
+      flex-grow: 1; 
     }
     h2{
       font-family: Tahoma, Geneva, sans-serif;
