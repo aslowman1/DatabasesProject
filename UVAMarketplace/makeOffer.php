@@ -5,6 +5,7 @@ require('User-db.php');
 require('Listing-db.php');
 require('Offer-db.php');
 
+
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -26,12 +27,24 @@ elseif (!$_SESSION['listingID']) {
 }
 
 $listing = getListingByID($_SESSION['listingID']);
+$listingID = $listing['listingID'];
+if ($listing['categoryID'] == "1") {
+    $furniture = getFurnitureByListingID($listingID);
+  }
+  elseif ($listing['categoryID'] == "2") {
+    $clothes = getClothesByListingID($listingID);
+  }
+  else {
+    $book = getBookByListingID($listingID);
+  }
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['makeOfferBtn'])) {
         $buyerID = $_SESSION['computingID'];
         $offerPrice = $_POST['offerPrice'];
         $listingID = $listing['listingID'];
-        addOffer($listingID, $buyerID, $offerPrice);
+        $sellerID = $listing['sellerID'];
+        addOffer($listingID, $buyerID, $offerPrice, $sellerID);
         header("Location: viewListing.php");
         exit();
     }
@@ -150,20 +163,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </style>
 </head>
 <body>  
-<div class="card"> 
-    <h1> <?php echo $listing['title']?></h1>
-    <img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto;" src="../itemPics/<?=$listing['itemPic']?>" > <br>
-    <p>Description: <?php echo $listing['description']?> </p><br>
-    <p>Date posted: <?php echo $listing['post_date']?> </p><br>
-    <p>Location: <?php echo $listing['location']?> </p><br>
-    <p>Condition: <?php echo $listing['condition']?> </p><br>
-    <p>Price: $<?php echo $listing['listed_price']?></p> <br>
-    <form action="makeOffer.php" method="post" enctype="multipart/form-data">     
-        <p>Offer price: $<input type="number" step="0.01" min=0 name="offerPrice"> </p> <br>
-        <div class = "button">
-            <input type="submit" name ="makeOfferBtn" value="Submit Offer" class="btn" />
-        </div>
-    </form>
-</div>
+<img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto;" src="../itemPics/<?=$listing['itemPic']?>" > <br>
+Description: <?php echo $listing['description']?> <br>
+Date posted: <?php echo $listing['post_date']?> <br>
+Location: <?php echo $listing['location']?> <br>
+<?php if($listing['categoryID'] == "2") : ?>
+  Size: <?php echo $clothes['size']?> <br>
+
+  <?php elseif($listing['categoryID'] == "1") : ?>
+  Material: <?php echo $furniture['material']?> <br>
+  Dimensions: <?php echo $furniture['dimensions']?> <br>
+  
+  <?php elseif($listing['categoryID'] == "3") : ?>
+  Book: <?php echo $book['name']?> <br>
+  Course: <?php echo $book['course']?> <br>
+  ISBN: <?php echo $book['IBSN']?> <br>
+<?php endif; ?>
+
+Condition: <?php echo $listing['condition']?> <br>
+Price: $<?php echo $listing['listed_price']?> <br>
+<form action="makeOffer.php" method="post" enctype="multipart/form-data">     
+    Offer price: $<input type="number" step="0.01" min=0 name="offerPrice"> <br>
+    <input type="submit" name ="makeOfferBtn" value="Submit Offer" class="btn" />
+</form>
 </body>
 </html>

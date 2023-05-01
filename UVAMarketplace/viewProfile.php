@@ -33,6 +33,7 @@ $user = getUser($_SESSION['profile']);
 $isMyProfile = $user['computingID'] == $_SESSION['computingID'];
 $listings = getListingsByUser($user['computingID']);
 $favorites = getFavoriteListings($user['computingID']);
+$userOffers = getOffersByUser($user['computingID']);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['viewListingBtn'])) {
@@ -199,7 +200,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 
-
 <div class="col listing-container">
   <h2>Listings</h2>
   <table class="table table-bordered table-striped">
@@ -260,6 +260,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </table>
 </div>
 
+
+<?php if($isMyProfile) : ?>
 <div class="col favorites-container">  
   <h2> Favorites:</h2>
   <table class="table table-bordered table-striped">
@@ -294,8 +296,88 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </tr>
     <?php endforeach; ?>
 </table>
+
+    <table class="table table-bordered table-striped">
+      <thead>
+      <tr style="background-color:white">
+        <th> Image </th>    
+        <th >Title </th>
+        <th> Listed Price </th>   
+        <th> Offer Price </th>
+        <th> Offer Status </th>
+        <th> View </th>
+        <th> Update Offer </th>
+      </tr>
+      </thead>
+      <?php foreach ($userOffers as $offer): ?>
+        <?php $listing = getListingByID($offer['listingID']); 
+              $offerStatus = getOfferStatus($offer['offerID']);
+        ?>
+      <tr>
+        <td><img src="../itemPics/<?=$listing['itemPic']?>" width=40 height=40></td>
+        <td><?php echo $listing['title']; ?></td>  
+        <td>$<?php echo $listing['listed_price']; ?></td>  
+        <td>$<?php echo $offer['offer_price']; ?></td> 
+        <td><?php  echo $offerStatus[0][0]; ?></td> 
+        <td> 
+          <form action="viewProfile.php" method="post" >
+            <input type="submit" name="viewListingBtn" value="View" class="btn btn-dark" style="font-family: JetBrains Mono,monospace;"/>
+            <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
+          </form>  
+        </td>  
+        <td> 
+          <form action="viewProfile.php" method="post" >
+            <input type="submit" name="makeOfferBtn" value="Offer" class="btn btn-dark" style="font-family: JetBrains Mono,monospace;"/>
+            <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />     
+          </form>  
+        </td>
+      </tr>
+    <?php endforeach; ?>
+</table>
+
+    <table class="table table-bordered table-striped">
+      <thead>
+      <tr style="background-color:white">
+        <th> Image </th>    
+        <th >Title </th>
+        <th> Listed Price </th>   
+        <th> Offer Price </th>
+        <th> Offer Status </th>
+        <th> View </th>
+        <th> Update Offer </th>
+      </tr>
+      </thead>
+      <?php foreach ($userOffers as $offer): ?>
+        <?php $listing = getListingByID($offer['listingID']); 
+              $offerStatus = getOfferStatus($offer['offerID']);
+        ?>
+      <tr>
+        <td><img src="../itemPics/<?=$listing['itemPic']?>" width=40 height=40></td>
+        <td><?php echo $listing['title']; ?></td>  
+        <td>$<?php echo $listing['listed_price']; ?></td>  
+        <td>$<?php echo $offer['offer_price']; ?></td> 
+        <td><?php  echo $offerStatus[0][0]; ?></td> 
+        <td> 
+          <form action="viewProfile.php" method="post" >
+            <input type="submit" name="viewListingBtn" value="View" class="btn btn-dark"/>
+            <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
+          </form>  
+        </td>  
+        <td> 
+          <form action="viewProfile.php" method="post" >
+            <input type="submit" name="makeOfferBtn" value="Offer" class="btn btn-dark"/>
+            <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />     
+          </form>  
+        </td>
+      </tr>
+    <?php endforeach; ?>
+</table>
 </div>
- 
+<?php endif; ?>
+
+
+
+
 </div>
 
 

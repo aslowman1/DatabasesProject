@@ -35,16 +35,41 @@ function hasOffered($listingID, $buyerID) {
     return !empty($results);
 }
 
-function getPendingOffersForListing($listingID) {
+function getOffersByUser($buyerID) {
     global $db;
 
-    $query = "select * from Offer where listingID=:listingID order by offer_price DESC";
+    $query = "select * from Offer where buyerID=:buyerID";
     $statement = $db -> prepare($query);
-    $statement->bindValue(':listingID', $listingID);
+    $statement->bindValue(':buyerID', $buyerID);
     $statement -> execute();
     $results = $statement -> fetchAll();
     $statement -> closeCursor();
-    
+    return $results;
+}
+
+function getOfferStatus($offerID) {
+    global $db;
+
+    $query = "select offer_status from evaluates where offerID=:offerID";
+    $statement = $db -> prepare($query);
+    $statement->bindValue(':offerID', $offerID);
+    $statement -> execute();
+    $results = $statement -> fetchAll();
+    $statement -> closeCursor();
+    return $results;
+}
+
+function getPendingOffersForListing($listingID) {
+    global $db;
+
+    $status = "Pending";
+    $query = "select * from Offer where offerID=:listingID and offerID in (select offerID from evaluates where offer_status=:status";
+    $statement = $db -> prepare($query);
+    $statement->bindValue(':listingID', $listingID);
+    $statement->bindValue(':status', $status);
+    $statement -> execute();
+    $results = $statement -> fetchAll();
+    $statement -> closeCursor();
     return $results;
 }
 
@@ -61,14 +86,13 @@ function getAllOffersForListing($listingID) {
     return $results;
 }
 
-function addOffer($listingID, $buyerID, $offerPrice) {
+function addOffer($listingID, $buyerID, $offerPrice, $sellerID) {
     global $db;
     $offerPrice = (float)$offerPrice;
 
     if (!hasOffered($listingID, $buyerID)) {
         $offerID = getNextOfferID();
 
-        print($offerID);
         $query = "insert into Offer values (:offerID, :offerPrice, :buyerID, :listingID)";
         $statement = $db->prepare($query);
         $statement->bindValue(':offerID', $offerID);
@@ -77,11 +101,27 @@ function addOffer($listingID, $buyerID, $offerPrice) {
         $statement->bindValue(':listingID', $listingID);
         $statement->execute();
         $statement->closeCursor();
+
+        $status = "Pending";
+        $query = "insert into evaluates values (:offerID, :sellerID, :status)";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':offerID', $offerID);
+        $statement->bindValue(':sellerID', $sellerID);
+        $statement->bindValue(':status', $status);
+        $statement->execute();
+        $statement->closeCursor();
     }
     else {
         updateOffer($listingID, $buyerID, $offerPrice);
-    }
 
+        $status = "Pending";
+        $query = "update evaluates set offer_status=:status where offerID=:offerID";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':offerID', $offerID);
+        $statement->bindValue(':status', $status);
+        $statement->execute();
+        $statement->closeCursor();
+    }
 }
 
 function updateOffer($listingID, $buyerID, $offerPrice) {
@@ -96,14 +136,13 @@ function updateOffer($listingID, $buyerID, $offerPrice) {
     $statement->closeCursor();
 }
 
-function rejectOffer($offerID, $sellerID) {
+function rejectOffer($offerID) {
     global $db;
 
     $status = "Rejected";
-    $query = "insert into evaluates values (:offerID, :sellerID, :status)";
+    $query = "update evaluates set offer_status=:status where offerID=:offerID";
     $statement = $db->prepare($query);
     $statement->bindValue(':offerID', $offerID);
-    $statement->bindValue(':sellerID', $sellerID);
     $statement->bindValue(':status', $status);
     $statement->execute();
     $statement->closeCursor();

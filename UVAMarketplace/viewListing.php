@@ -30,7 +30,7 @@ $listing = getListingByID($_SESSION['listingID']);
 $listingID = $listing['listingID'];
 $isMyListing = $listing['sellerID'] == $_SESSION['computingID'];
 if ($isMyListing) {
-    $offers = getAllOffersForListing($listing['listingID']);
+    $offers = getPendingOffersForListing($listing['listingID']);
 }
 else {
     $isFavorite = isFavorite($_SESSION['computingID'], $listing['listingID']);
@@ -60,10 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         unfavorite($_SESSION['computingID'], $listing['listingID']);
         $isFavorite = isFavorite($_SESSION['computingID'], $listing['listingID']);
     }    
-    elseif (!empty($_POST['unfavoriteBtn'])) {
-        unfavorite($_SESSION['computingID'], $listing['listingID']);
-        $isFavorite = isFavorite($_SESSION['computingID'], $listing['listingID']);
-    }
+    elseif (!empty($_POST['rejectOfferBtn'])) {
+      rejectOffer($_POST['offerToReject']);
+      $offers = getPendingOffersForListing($listing['listingID']);
+
+    }    
+
 }
 
 
