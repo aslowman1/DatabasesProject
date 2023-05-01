@@ -4,7 +4,7 @@
 <style>
     .navbar {
         /* background: transparent; */
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: #061B36;
     }
 
     .logo {
@@ -47,15 +47,14 @@
 
 <nav class="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="home.php" style="font-family: Lucida Console, Courier New, monospace; padding: 15px; font-size:25px, color:white;">UVA Marketplace
-            </a>
+            <a class="navbar-brand" href="home.php" style="font-family: Lucida Console, Courier New, monospace; padding: 15px; font-size:25px, color:white; float: none; position: center">UVA Marketplace</a>
             <div class="nav">
-                <a class="nav-link" href="createListing.php" style="color: #FFFFFF">Create Listing</a> 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" aria-expanded="false" style="color: white;"><img src="../profilePics/<?=$_SESSION['profilePic']?>" width="40" height="40" class="rounded-circle"> </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="viewProfile.php?profile=user">My Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="createListing.php">Create Listing</a></li>
                         <li><a class="dropdown-item" href="updateProfile.php">Edit Profile</a></li>
                         <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                     </ul>
