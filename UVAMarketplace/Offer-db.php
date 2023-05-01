@@ -35,6 +35,30 @@ function hasOffered($listingID, $buyerID) {
     return !empty($results);
 }
 
+function getOffersByUser($buyerID) {
+    global $db;
+
+    $query = "select * from Offer where buyerID=:buyerID";
+    $statement = $db -> prepare($query);
+    $statement->bindValue(':buyerID', $buyerID);
+    $statement -> execute();
+    $results = $statement -> fetchAll();
+    $statement -> closeCursor();
+    return $results;
+}
+
+function getOfferStatus($offerID) {
+    global $db;
+
+    $query = "select offer_status from evaluates where offerID=:offerID";
+    $statement = $db -> prepare($query);
+    $statement->bindValue(':offerID', $offerID);
+    $statement -> execute();
+    $results = $statement -> fetchAll();
+    $statement -> closeCursor();
+    return $results;
+}
+
 function getPendingOffersForListing($listingID) {
     global $db;
 
