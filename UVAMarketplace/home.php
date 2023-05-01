@@ -175,7 +175,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               <div class="row">
                 <p class="card-text" style="text-align: left, font-size: 10px;  line-height: 0.8;" >
                 <div class="col-sm">
-                  <h1>Seller:</h1> <?php echo getUser($listing['sellerID'])['name']; ?> <br>
+                  <h1>Seller:</h1>  
+                </form> 
+                  <form action="home.php" method="post" >
+                    <input type="submit" name="viewSellerBtn" value=" <?php echo getUser($listing['sellerID'])['name']; ?>" class="button"/>
+                    <input type="hidden" name="sellerID" value="<?php echo $listing['sellerID'];?>" />     
+                  </form>
+  
                 </div>
                 <div class="col-sm" style="text-align: right">
                     <h1>Price:</h1> $<?php echo $listing['listed_price']; ?> <br>
@@ -187,16 +193,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   <form action="home.php" method="post" >
                     <input type="submit" name="viewListingBtn" value="View Listing" class="button"/>
                     <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
-                  </form> 
                   <form action="home.php" method="post" >
-                    <input type="submit" name="viewSellerBtn" value="View Seller" class="button"/>
-                    <input type="hidden" name="sellerID" value="<?php echo $listing['sellerID'];?>" />     
-                  </form>
-                  <form action="home.php" method="post" >
-                <?php if(!($listing['sellerID'] == $_SESSION['computingID'])) : ?>
-                  <input type="submit" name="makeOfferBtn" value="Make Offer" class="btn btn-dark"/>
-                  <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />
-                <?php endif; ?>
+                    <?php if(!($listing['sellerID'] == $_SESSION['computingID'])) : ?>
+                      <input type="submit" name="makeOfferBtn" value="Make Offer" class="button"/>
+                      <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />
+                    <?php endif; ?>
                 </form>
               </div>
               </div>
