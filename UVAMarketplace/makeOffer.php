@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     .card {
       padding-top: 25px;
       box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.6);
-      max-width: 400px;
+      max-width: 450px;
       margin: 100px auto;
       text-align: center;
       font-family: arial;
@@ -158,18 +158,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 </style>
 </head>
-<h1> <?php echo $listing['title']?></h1>
+
 <body>  
-<img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto;" src="../itemPics/<?=$listing['itemPic']?>" > <br>
-Description: <?php echo $listing['description']?> <br>
-Date posted: <?php echo $listing['post_date']?> <br>
-Location: <?php echo $listing['location']?> <br>
-Condition: <?php echo $listing['condition']?> <br>
-Price: $<?php echo $listing['listed_price']?> <br>
-<form action="makeOffer.php" method="post" enctype="multipart/form-data">     
-    Offer price: $<input type="number" step="0.01" min=0 name="offerPrice"> <br>
-    <input type="submit" name ="makeOfferBtn" value="Submit Offer" class="btn" />
-</form>
+<div class="card">   
+    <h1> <?php echo $listing['title']?></h1> 
+    <img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto;" src="../itemPics/<?=$listing['itemPic']?>" > <br>
+        <h3>Description: </h3><?php echo $listing['description']?> <br>
+        <h3>Date posted:</h3> <?php echo $listing['post_date']?> <br>
+        <h3>Location: </h3><?php echo $listing['location']?> <br>
+        <h3>Condition: </h3><?php echo $listing['condition']?> <br>
+        <h3>Price:</h3> $<?php echo $listing['listed_price']?> <br>
+    <form action="makeOffer.php" method="post" enctype="multipart/form-data">     
+        Offer price: $<input type="number" step="0.01" min=0 name="offerPrice"> <br>
+        <div class="button">
+            <input type="submit" name ="makeOfferBtn" value="Submit Offer" class="btn" />
+        </div>
+    </form>
 </div>
 </body>
 </html>
