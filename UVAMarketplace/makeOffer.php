@@ -110,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       text-align: center;
       font-family: arial;
       background-color: #DA8E41;
+      padding: 30px;
     }
 
     .button{
