@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     max-width: 45%; /* set both containers to take up 49% of the available width */
     float: left;
     box-sizing: border-box; /* include padding and border in width calculation */
-    margin-right: 40px;
+    margin-left: 40px;
     margin-bottom: 20px;
     background-color: #DA8E41;
     }
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       float: left;
       box-sizing: border-box;
       max-width: 45%;
-      margin-right: 40px;
+      margin-left: 40px;
       margin-bottom: 20px;
       background-color: #DA8E41;
 
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       float: right;
       max-width: 45%;
       box-sizing: border-box;
-      margin-right: 100px;
+      margin-right: 60px;
       background-color: #DA8E41;
       display: flex; 
       flex-direction: column; 

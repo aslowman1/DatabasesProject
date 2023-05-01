@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       line-height: 0;
     }
 
-    h3{
+    h3, input, td, th{
       font-family: Tahoma, Geneva, sans-serif;
       font-size: 10px;
       letter-spacing: 2px;
@@ -198,23 +198,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div class="card">
     <h1> <?php echo $listing['title']?></h1>
     <img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto;" src="../itemPics/<?=$listing['itemPic']?>" > <br>
-    <h3>Description: </h3> <?php echo $listing['description']?> <br>
-    <h3>Date posted: </h3> <?php echo $listing['post_date']?> <br>
-    <h3>Location: </h3> <?php echo $listing['location']?> <br>
-    <h3>Condition: </h3> <?php echo $listing['condition']?> <br>
-    <h3>Listed Price:</h3> $<?php echo $listing['listed_price']?> <br>
+    <p>Description: </p> <h3> <?php echo $listing['description']?> </h3><br>
+    <p>Date posted: </p> <h3> <?php echo $listing['post_date']?></h3> <br>
+    <p>Location: </p> <h3> <?php echo $listing['location']?> </h3> <br>
+    <p>Condition: </p><h3> <?php echo $listing['condition']?> </h3><br>
+    <p>Listed Price:</p> <h3>$<?php echo $listing['listed_price']?></h3> <br>
 
     <?php if($listing['categoryID'] == "2") : ?>
-      <p>Size: <?php echo $clothes['size']?> </p><br>
+      <p>Size: </p> <h3> <?php echo $clothes['size']?> </h3> <br>
 
       <?php elseif($listing['categoryID'] == "1") : ?>
-        <p>Material: <?php echo $furniture['material']?></p> <br>
-        <p>Dimensions: <?php echo $furniture['dimensions']?> </p><br>
+        <p>Material: </p> <?php echo $furniture['material']?></h3><br>
+        <p>Dimensions: </p> <?php echo $furniture['dimensions']?> </h3>><br>
       
       <?php elseif($listing['categoryID'] == "3") : ?>
-        <p>Book: <?php echo $book['name']?> </p><br>
-        <p>Course: <?php echo $book['course']?> </p><br>
-        <p>ISBN: <?php echo $book['IBSN']?></p> <br>
+        <p>Book: </p> <h3> <?php echo $book['name']?> </h3> <br>
+        <p>Course: </p> <h3> <?php echo $book['course']?> </h3> <br>
+        <p>ISBN: </p> <h3> <?php echo $book['IBSN']?> </h3> <br>
 
     <?php endif; ?>
 
@@ -238,11 +238,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
 
     <?php else : //is my listing?>
-        Offers: 
+      <p> Offers: </p>
         <div class="row justify-content-center">  
-        <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+        <table class="table table-bordered table-striped" style="width:70%">
           <thead>
-          <tr style="background-color:#B0B0B0">
+          <tr style="background-color:white">
             <th> Buyer name </th> 
             <th> Computing ID </th>
             <th> Offer Price </th>
@@ -252,23 +252,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           </thead>
         <?php foreach ($offers as $offer): ?>
         <?php $buyer = getUser($offer['buyerID']); ?>
-          <tr>
+          <tr style="background-color:white">
             <td><?php echo $buyer['name']; ?></td>  
             <td><?php echo $buyer['computingID']; ?></td> 
             <td>$<?php echo $offer['offer_price']; ?></td>  
             <td> 
               <form action="viewListing.php" method="post" >
-                <div class = "button">
                   <input type="submit" name="acceptOfferBtn" value="Accept" class="btn btn-success"/>
-                </div>
                 <input type="hidden" name="offerToAccept" value="<?php echo $offer['offerID'];?>" />  
               </form>  
             </td> 
             <td> 
               <form action="viewListing.php" method="post" >
-                <div class = "button">
                   <input type="submit" name="rejectOfferBtn" value="Reject" class="btn btn-danger"/>
-                </div>
                 <input type="hidden" name="offerToReject" value="<?php echo $offer['offerID'];?>" />     
               </form>  
             </td> 
