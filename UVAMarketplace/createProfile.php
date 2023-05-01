@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     	</div>
 	  <div class="button">
       		<input type="submit" name ="createProfileBtn" value="Submit" class="btn" /> <br/>
-</div>
+    </div>
     </form>
   </div>
 
