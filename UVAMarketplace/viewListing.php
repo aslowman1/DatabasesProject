@@ -202,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h3>Date posted: </h3> <?php echo $listing['post_date']?> <br>
     <h3>Location: </h3> <?php echo $listing['location']?> <br>
     <h3>Condition: </h3> <?php echo $listing['condition']?> <br>
-    <h3>Listed Price:</h3> $<?php echo $listing['listed_price']?> <br>
+    <h3>Listed Price:</h3> $<?php echo $listing['listed_price']?> <br> <br>
 
     <?php if($listing['categoryID'] == "2") : ?>
       <p>Size: <?php echo $clothes['size']?> </p><br>
@@ -236,8 +236,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           </div>
         <?php endif; ?>
         </form>
-
-    <?php else : //is my listing?>
+      
+    <?php elseif($offers) : //is my listing?>
         Offers: 
         <div class="row justify-content-center">  
         <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
@@ -275,6 +275,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           </tr>
         <?php endforeach; ?>
     </table>
+    <?php else: ?>
+      No pending offers
     <?php endif; ?>
     <?php else: ?>
       <p>Sold price: $<?php echo($finalOffer[0]['offer_price']);?> </p><br>

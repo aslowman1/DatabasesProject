@@ -236,9 +236,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <th>Edit</th>
           <th>Delete</th>
         <?php endif; ?>
-        <?php if(!$isMyProfile) : ?>
-          <th>Make Offer</th>
-        <?php endif; ?>
+
       </tr>
     </thead>
     <tbody>
@@ -268,14 +266,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               </form>
             </td>
           <?php endif; ?>
-          <?php if(!$isMyProfile) : ?>
-            <td>
-              <form action="viewProfile.php" method="post">
-                <input type="submit" name="makeOfferBtn" value="Offer" class="btn btn-dark" style="font-family: JetBrains Mono,monospace;"/>
-                <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />
-              </form>
-            </td>
-          <?php endif; ?>
+          
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -294,7 +285,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <th> Price </th>   
         <th> Post Date </th>
         <th> View </th>
-        <th> Make Offer </th>
       </tr>
       </thead>
     <?php foreach ($favorites as $listing): ?>
@@ -309,12 +299,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
           </form>  
         </td>  
-        <td> 
-          <form action="viewProfile.php" method="post" >
-            <input type="submit" name="makeOfferBtn" value="Offer" class="btn btn-dark" style="font-family: JetBrains Mono,monospace;"/>
-            <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />     
-          </form>  
-        </td>
       </tr>
     <?php endforeach; ?>
 </table>
@@ -332,7 +316,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <th> Offer Price </th>
         <th> Offer Status </th>
         <th> View </th>
-        <th> Update Offer </th>
       </tr>
       </thead>
       <?php foreach ($userOffers as $offer): ?>
@@ -351,12 +334,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="hidden" name="listingToView" value="<?php echo $listing['listingID'];?>" />     
           </form>  
         </td>  
-        <td style="background-color:white"> 
-          <form action="viewProfile.php" method="post" >
-            <input type="submit" name="makeOfferBtn" value="Offer" class="btn btn-dark" style="font-family: JetBrains Mono,monospace;"/>
-            <input type="hidden" name="listingToOffer" value="<?php echo $listing['listingID'];?>" />     
-          </form>  
-        </td>
       </tr>
     <?php endforeach; ?>
     </table>

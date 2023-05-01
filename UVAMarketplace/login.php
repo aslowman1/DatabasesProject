@@ -161,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="password" id="pwd" name="pwd" required /> 
         <div class="button">
             <input type="submit" name="loginBtn" value="Sign in" class="btn" /> 
-            <?php if ($attemptedLogin) { echo("Invallid username or password.\n"); } ?>
+            <?php if ($attemptedLogin) { echo("Invalid username or password.\n"); } ?>
       <h3>
     </form>
   </div>
