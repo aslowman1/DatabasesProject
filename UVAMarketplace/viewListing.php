@@ -238,11 +238,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
       
     <?php elseif($offers) : //is my listing?>
-        Offers: 
+      <form action="viewProfile.php" method="post">
+        <div class="button">
+                <input type="submit" name="editListingBtn" value="Edit" class="btn" style="font-family: JetBrains Mono,monospace;"/>
+    </div>
+                <input type="hidden" name="listingToEdit" value="<?php echo $listing['listingID'];?>" />
+              </form>
+        <p>Offers:</p> 
         <div class="row justify-content-center">  
-        <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+        <table class="table table-bordered table-striped" style="width:70%">
           <thead>
-          <tr style="background-color:#B0B0B0">
+          <tr style="background-color:white">
             <th> Buyer name </th> 
             <th> Computing ID </th>
             <th> Offer Price </th>
@@ -252,23 +258,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           </thead>
         <?php foreach ($offers as $offer): ?>
         <?php $buyer = getUser($offer['buyerID']); ?>
-          <tr>
+          <tr style="background-color:white">
             <td><?php echo $buyer['name']; ?></td>  
             <td><?php echo $buyer['computingID']; ?></td> 
             <td>$<?php echo $offer['offer_price']; ?></td>  
             <td> 
               <form action="viewListing.php" method="post" >
-                <div class = "button">
                   <input type="submit" name="acceptOfferBtn" value="Accept" class="btn btn-success"/>
-                </div>
                 <input type="hidden" name="offerToAccept" value="<?php echo $offer['offerID'];?>" />  
               </form>  
             </td> 
             <td> 
               <form action="viewListing.php" method="post" >
-                <div class = "button">
                   <input type="submit" name="rejectOfferBtn" value="Reject" class="btn btn-danger"/>
-                </div>
                 <input type="hidden" name="offerToReject" value="<?php echo $offer['offerID'];?>" />     
               </form>  
             </td> 
