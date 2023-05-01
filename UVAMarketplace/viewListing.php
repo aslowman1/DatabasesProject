@@ -188,11 +188,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div class="card">
     <h1> <?php echo $listing['title']?></h1>
     <img style="max-width: 300px; height:auto; max-height: 200px;  margin-left: auto; margin-right: auto;" src="../itemPics/<?=$listing['itemPic']?>" > <br>
-    <p>Description: <?php echo $listing['description']?></p> <br>
-    <p>Date posted: <?php echo $listing['post_date']?> </p><br>
-    <p>Location: <?php echo $listing['location']?></p> <br>
-    <p>Condition: <?php echo $listing['condition']?> </p><br>
-    <p>Price: $<?php echo $listing['listed_price']?> </p><br>
+    <h3>Description: </h3> <?php echo $listing['description']?> <br>
+    <h3>Date posted: </h3> <?php echo $listing['post_date']?> <br>
+    <h3>Location: </h3> <?php echo $listing['location']?> <br>
+    <h3>Condition: </h3> <?php echo $listing['condition']?> <br>
+    <h3>Price:</h3> $<?php echo $listing['listed_price']?> <br>
 
     <?php if($listing['categoryID'] == "2") : ?>
       <p>Size: <?php echo $clothes['size']?> </p><br>
