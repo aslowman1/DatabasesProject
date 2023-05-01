@@ -63,7 +63,7 @@ function getPendingOffersForListing($listingID) {
     global $db;
 
     $status = "Pending";
-    $query = "select * from Offer where offerID=:listingID and offerID in (select offerID from evaluates where offer_status=:status";
+    $query = "select * from Offer where listingID=:listingID and offerID in (select evaluates.offerID from evaluates where offer_status=:status)";
     $statement = $db -> prepare($query);
     $statement->bindValue(':listingID', $listingID);
     $statement->bindValue(':status', $status);
@@ -114,6 +114,16 @@ function addOffer($listingID, $buyerID, $offerPrice, $sellerID) {
     else {
         updateOffer($listingID, $buyerID, $offerPrice);
 
+        $query = "select offerID from Offer where listingID=:listingID and buyerID=:buyerID";
+        $statement = $db -> prepare($query);
+        $statement->bindValue(':listingID', $listingID);
+        $statement->bindValue(':buyerID', $buyerID);
+        $statement -> execute();
+        $results = $statement -> fetchAll();
+        $statement -> closeCursor();
+        
+        $offerID = $results[0][0];
+        
         $status = "Pending";
         $query = "update evaluates set offer_status=:status where offerID=:offerID";
         $statement = $db->prepare($query);

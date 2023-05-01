@@ -96,6 +96,24 @@ function deleteListing($listingID) {
         deleteBook($listingID);
     }
 
+    $query = "delete from favorites where listingID=:listingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':listingID', $listingID);
+    $statement->execute();
+    $statement->closeCursor();
+
+    $query = "delete from evaluates where offerID in (select offerID from Offer where listingID=:listingID)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':listingID', $listingID);
+    $statement->execute();
+    $statement->closeCursor();
+
+    $query = "delete from Offer where listingID=:listingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':listingID', $listingID);
+    $statement->execute();
+    $statement->closeCursor();
+
     $query = "delete from Listing where listingID=:listingID";
     $statement = $db->prepare($query);
     $statement->bindValue(':listingID', $listingID);

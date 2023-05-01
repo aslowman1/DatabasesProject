@@ -108,7 +108,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               <p class="card-text" >
                   Seller: <?php echo getUser($listing['sellerID'])['name']; ?> <br>
                   Price: $<?php echo $listing['listed_price']; ?> <br>
-                  Description: <?php echo $listing['description']; ?> <br>
+                  <div style="overflow: hidden;
+                              text-overflow: ellipsis;
+                              display: -webkit-box;
+                              -webkit-line-clamp: 3; /* number of lines to show */
+                              line-clamp: 2;
+                              -webkit-box-orient: vertical;">
+                  Description: <?php echo $listing['description']; ?> <br> </div>
                   Location: <?php echo $listing['location']; ?> <br>
                   Post date: <?php echo $listing['post_date']; ?>
               </p>
